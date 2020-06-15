@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\LocationRepository;
+use App\Repository\DeviceTypesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=LocationRepository::class)
+ * @ORM\Entity(repositoryClass=DeviceTypesRepository::class)
  */
-class Location
+class DeviceTypes
 {
     /**
      * @ORM\Id()
@@ -25,13 +25,7 @@ class Location
     private $Name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Organisation::class, inversedBy="locations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $organisation;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="location")
+     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="device_type")
      */
     private $stockings;
 
@@ -57,18 +51,6 @@ class Location
         return $this;
     }
 
-    public function getOrganisation(): ?Organisation
-    {
-        return $this->organisation;
-    }
-
-    public function setOrganisation(?Organisation $organisation): self
-    {
-        $this->organisation = $organisation;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Stockings[]
      */
@@ -81,7 +63,7 @@ class Location
     {
         if (!$this->stockings->contains($stocking)) {
             $this->stockings[] = $stocking;
-            $stocking->setLocation($this);
+            $stocking->setDeviceType($this);
         }
 
         return $this;
@@ -92,8 +74,8 @@ class Location
         if ($this->stockings->contains($stocking)) {
             $this->stockings->removeElement($stocking);
             // set the owning side to null (unless already changed)
-            if ($stocking->getLocation() === $this) {
-                $stocking->setLocation(null);
+            if ($stocking->getDeviceType() === $this) {
+                $stocking->setDeviceType(null);
             }
         }
 
@@ -104,4 +86,5 @@ class Location
     {
         return $this->getName();
     }
+
 }

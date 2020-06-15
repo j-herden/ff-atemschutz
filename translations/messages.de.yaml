@@ -1,5 +1,14 @@
 # Datenbank-Strings
 ID : ID
-Location : Ort
+Location : Standort
 Organisation : Organisation
 Name : Name
+DeviceTypes : Gerätetypen
+Stockings : Einlagerungen
+User : Benutzer
+Date : Datum
+Year : Jahr
+Month : Monat
+Day : Tag
+Device id : Geräte-Id
+Device type : Gerätetyp
