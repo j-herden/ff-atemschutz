@@ -1,4 +1,11 @@
 easy_admin:
+    design:
+        menu:
+            - { entity: 'Stockings', icon: 'location-arrow' }
+            - { entity: 'Organisation', icon: 'sitemap' }
+            - { entity: 'Location', icon: 'map-marker-alt' }
+            - { entity: 'DeviceTypes', icon: 'tools' }
+            - { entity: 'User', icon: 'user' }
     entities:
 #        # List the entity class name you want to manage
         - App\Entity\Stockings
