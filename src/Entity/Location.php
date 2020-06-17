@@ -31,13 +31,14 @@ class Location
     private $organisation;
 
     /**
-     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="location")
+     * @ORM\OneToMany(targetEntity=Positions::class, mappedBy="Location")
      */
-    private $stockings;
+    private $positions;
 
     public function __construct()
     {
         $this->stockings = new ArrayCollection();
+        $this->positions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,39 +70,40 @@ class Location
         return $this;
     }
 
-    /**
-     * @return Collection|Stockings[]
-     */
-    public function getStockings(): Collection
+    public function __toString(): String
     {
-        return $this->stockings;
+        $organisation = $this->getOrganisation()->getName();
+        return $this->getName() . " ($organisation)";
     }
 
-    public function addStocking(Stockings $stocking): self
+    /**
+     * @return Collection|Positions[]
+     */
+    public function getPositions(): Collection
     {
-        if (!$this->stockings->contains($stocking)) {
-            $this->stockings[] = $stocking;
-            $stocking->setLocation($this);
+        return $this->positions;
+    }
+
+    public function addPosition(Positions $position): self
+    {
+        if (!$this->positions->contains($position)) {
+            $this->positions[] = $position;
+            $position->setLocation($this);
         }
 
         return $this;
     }
 
-    public function removeStocking(Stockings $stocking): self
+    public function removePosition(Positions $position): self
     {
-        if ($this->stockings->contains($stocking)) {
-            $this->stockings->removeElement($stocking);
+        if ($this->positions->contains($position)) {
+            $this->positions->removeElement($position);
             // set the owning side to null (unless already changed)
-            if ($stocking->getLocation() === $this) {
-                $stocking->setLocation(null);
+            if ($position->getLocation() === $this) {
+                $position->setLocation(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString(): String
-    {
-        return $this->getName();
     }
 }

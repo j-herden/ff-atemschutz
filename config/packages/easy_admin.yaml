@@ -2,6 +2,7 @@ easy_admin:
     design:
         menu:
             - { entity: 'Stockings', icon: 'location-arrow' }
+            - { entity: 'Positions', icon: 'box' }
             - { entity: 'Organisation', icon: 'sitemap' }
             - { entity: 'Location', icon: 'map-marker-alt' }
             - { entity: 'DeviceTypes', icon: 'tools' }
@@ -13,3 +14,4 @@ easy_admin:
         - App\Entity\Location
         - App\Entity\DeviceTypes
         - App\Entity\User
+        - App\Entity\Positions

@@ -18,18 +18,6 @@ class Stockings
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="stockings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $location;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=DeviceTypes::class, inversedBy="stockings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $device_type;
-
-    /**
      * @ORM\Column(type="date")
      */
     private $date;
@@ -39,33 +27,20 @@ class Stockings
      */
     private $device_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Positions::class, inversedBy="Stockings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $position;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $removed;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLocation(): ?Location
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?Location $location): self
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    public function getDeviceType(): ?DeviceTypes
-    {
-        return $this->device_type;
-    }
-
-    public function setDeviceType(?DeviceTypes $device_type): self
-    {
-        $this->device_type = $device_type;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -88,6 +63,36 @@ class Stockings
     public function setDeviceId(string $device_id): self
     {
         $this->device_id = $device_id;
+
+        return $this;
+    }
+
+    public function getPosition(): ?Positions
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?Positions $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function __toString(): String
+    {
+        $date = $this->getDate()->format('Y-m-d');
+        return $date . ' ' . $this->getDeviceId();
+    }
+
+    public function getRemoved(): ?bool
+    {
+        return $this->removed;
+    }
+
+    public function setRemoved(bool $removed): self
+    {
+        $this->removed = $removed;
 
         return $this;
     }

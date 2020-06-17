@@ -25,13 +25,14 @@ class DeviceTypes
     private $Name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="device_type")
+     * @ORM\OneToMany(targetEntity=Positions::class, mappedBy="deviceType")
      */
-    private $stockings;
+    private $positions;
 
     public function __construct()
     {
         $this->stockings = new ArrayCollection();
+        $this->positions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,40 +52,40 @@ class DeviceTypes
         return $this;
     }
 
-    /**
-     * @return Collection|Stockings[]
-     */
-    public function getStockings(): Collection
+    public function __toString(): String
     {
-        return $this->stockings;
+        return $this->getName();
     }
 
-    public function addStocking(Stockings $stocking): self
+    /**
+     * @return Collection|Positions[]
+     */
+    public function getPositions(): Collection
     {
-        if (!$this->stockings->contains($stocking)) {
-            $this->stockings[] = $stocking;
-            $stocking->setDeviceType($this);
+        return $this->positions;
+    }
+
+    public function addPosition(Positions $position): self
+    {
+        if (!$this->positions->contains($position)) {
+            $this->positions[] = $position;
+            $position->setDeviceType($this);
         }
 
         return $this;
     }
 
-    public function removeStocking(Stockings $stocking): self
+    public function removePosition(Positions $position): self
     {
-        if ($this->stockings->contains($stocking)) {
-            $this->stockings->removeElement($stocking);
+        if ($this->positions->contains($position)) {
+            $this->positions->removeElement($position);
             // set the owning side to null (unless already changed)
-            if ($stocking->getDeviceType() === $this) {
-                $stocking->setDeviceType(null);
+            if ($position->getDeviceType() === $this) {
+                $position->setDeviceType(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString(): String
-    {
-        return $this->getName();
     }
 
 }
