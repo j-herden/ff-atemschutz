@@ -2,17 +2,36 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml" >
         <title>{% block title %}Feuerwehren Bad Zwesten / Atemschutz{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+        {% block stylesheets %}
+          {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+          {{ encore_entry_link_tags('app') }}
+        {% endblock %}
     </head>
     <body>
-        <h1>Feuerwehren Bad Zwesten - Übersicht Atemschutz</h1>
+
+        <h1>
+            <img src="{{ asset('img/favicon.svg') }}" class="header" />
+            Feuerwehren Bad Zwesten - Übersicht Atemschutz
+        </h1>
         {% block body %}{% endblock %}
 
         <div class="footer">
-            Dashboard - About - Impressum
+            <a href="{{ path('dashboard') }}">Dashboard</a>
+             -
+            <a href="{{ path('about_page') }}">About</a>
+             -
+            <a href="{{ path('impressum') }}">Impressum</a>
         </div>
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+
+        <!-- Renders app.js & a webpack runtime.js file -->
+            <script src="/build/runtime.js"></script>
+            <script src="/build/app.js"></script>
+        {% endblock %}
     </body>
 </html>

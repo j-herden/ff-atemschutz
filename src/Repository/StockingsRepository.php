@@ -19,22 +19,20 @@ class StockingsRepository extends ServiceEntityRepository
         parent::__construct($registry, Stockings::class);
     }
 
-    // /**
-    //  * @return Stockings[] Returns an array of Stockings objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Stockings[] Returns an array of Stockings objects
+     */
+    public function currentByOrganisation() : array
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('s.removed = :removed')
+            ->setParameter('removed', false)
+//            ->orderBy('s.id', 'ASC')
+//            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Stockings

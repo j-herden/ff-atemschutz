@@ -29,6 +29,11 @@ class Organisation
      */
     private $locations;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $color;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -85,5 +90,17 @@ class Organisation
     public function __toString(): String
     {
         return $this->getName();
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
     }
 }
