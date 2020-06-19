@@ -36,7 +36,7 @@ class Stockings
     /**
      * @ORM\Column(type="boolean")
      */
-    private $removed;
+    private $removed = false;
 
     public function getId(): ?int
     {

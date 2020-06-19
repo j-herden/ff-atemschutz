@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml" >
         <title>{% block title %}Feuerwehren Bad Zwesten / Atemschutz{% endblock %}</title>
 
@@ -11,11 +12,33 @@
         {% endblock %}
     </head>
     <body>
-
+    <div class="container" id="page">
         <h1>
             <img src="{{ asset('img/favicon.svg') }}" class="header" />
             Feuerwehren Bad Zwesten - Übersicht Atemschutz
         </h1>
+        {# read and display just one flash message type #}
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-primary">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# read and display just one flash message type #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# read and display just one flash message type #}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
         {% block body %}{% endblock %}
 
         <div class="footer">
@@ -24,6 +47,8 @@
             <a href="{{ path('about_page') }}">About</a>
              -
             <a href="{{ path('impressum') }}">Impressum</a>
+             -
+            <a href="{{ path('easyadmin') }}">Admin</a>
         </div>
 
         {% block javascripts %}
@@ -33,5 +58,6 @@
             <script src="/build/runtime.js"></script>
             <script src="/build/app.js"></script>
         {% endblock %}
+    </div>
     </body>
 </html>

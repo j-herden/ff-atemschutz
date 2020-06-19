@@ -32,12 +32,12 @@ class Location
 
     /**
      * @ORM\OneToMany(targetEntity=Positions::class, mappedBy="Location")
+     * @ORM\OrderBy({"Name" = "ASC"})
      */
     private $positions;
 
     public function __construct()
     {
-        $this->stockings = new ArrayCollection();
         $this->positions = new ArrayCollection();
     }
 

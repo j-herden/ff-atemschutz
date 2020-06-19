@@ -38,6 +38,7 @@ class Positions
 
     /**
      * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position")
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     private $Stockings;
 
