@@ -1,7 +1,4 @@
 
-// the ~ allows you to reference things in node_modules
-@import "~bootstrap/scss/bootstrap";
-
 body {
     background-color: lightgray;
 }
@@ -90,4 +87,13 @@ input.dateinput, input.deviceId {
 
 input.dateinput {
     width: 105px;
+}
+
+# Icon für collapse
+[data-toggle="collapse"] .fa:before {
+  content: "\f139";
+}
+
+[data-toggle="collapse"].collapsed  .fa:before {
+  content: "\f13a";
 }
