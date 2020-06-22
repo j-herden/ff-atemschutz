@@ -8,7 +8,9 @@ use App\Entity\Postions;
 use App\Entity\Stockings;
 use App\Repository\OrganisationRepository;
 use App\Repository\PositionsRepository;
+use App\Repository\DeviceTypesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,17 +19,46 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function index(Request $request, OrganisationRepository $organisationRepo, PositionsRepository $positionsRepo)
+    public function index(Request $request, OrganisationRepository $organisationRepo, PositionsRepository $positionsRepo, DeviceTypesRepository $deviceTypesRepo, SessionInterface $session)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $this->addStocking($request, $positionsRepo);
 
+        // settings
+        $showForms    = $session->get('dashboard.showForms', true);
+        $maxStockings = $session->get('dashboard.maxStockings', 3);
+        $deviceId     = $session->get('dashboard.deviceId', 0);
+        if ( ! is_null( $request->request->get('buttonSettings') ) )
+        {
+            $showForms = ( $request->request->get('showForms') === 'on' );
+
+            $formMaxStockings = $request->request->get('maxStockings');
+            if ( ! is_null( $formMaxStockings ) )
+            {
+                $maxStockings = intval( $formMaxStockings );
+            }
+
+            $formDeviceId = $request->request->get('deviceTypeId');
+            if ( ! is_null( $formDeviceId ) )
+            {
+                $deviceId = intval( $formDeviceId );
+            }
+        }
+
         $organisations = $organisationRepo->findAll();
+        $deviceTypes = $deviceTypesRepo->findAll();
+
+        $session->set('dashboard.showForms',    $showForms);
+        $session->set('dashboard.maxStockings', $maxStockings);
+        $session->set('dashboard.deviceId',     $deviceId);
 
         return $this->render('dashboard/index.html.twig', [
             'organisations' => $organisations,
-            'showForms'     => true,
-            'deviceId'      => 0,
-            'maxStockings'  => 6,
+            'deviceTypes'   => $deviceTypes,
+            'showForms'     => $showForms,
+            'deviceId'      => $deviceId,
+            'maxStockings'  => $maxStockings,
         ]);
     }
 
@@ -66,6 +97,7 @@ class DashboardController extends AbstractController
         $stocking = new Stockings();
         $stocking->setDate($dateObj);
         $stocking->setDeviceId($deviceId);
+        $stocking->setUser( $this->getUser() );
 
         $position->addStocking($stocking);
 

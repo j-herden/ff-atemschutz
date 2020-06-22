@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,6 +35,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="user")
+     */
+    private $stockings;
+
+    public function __construct()
+    {
+        $this->stockings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,5 +127,36 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getEmail();
+    }
+
+    /**
+     * @return Collection|Stockings[]
+     */
+    public function getStockings(): Collection
+    {
+        return $this->stockings;
+    }
+
+    public function addStocking(Stockings $stocking): self
+    {
+        if (!$this->stockings->contains($stocking)) {
+            $this->stockings[] = $stocking;
+            $stocking->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStocking(Stockings $stocking): self
+    {
+        if ($this->stockings->contains($stocking)) {
+            $this->stockings->removeElement($stocking);
+            // set the owning side to null (unless already changed)
+            if ($stocking->getUser() === $this) {
+                $stocking->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

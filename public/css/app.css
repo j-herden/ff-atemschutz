@@ -1,6 +1,16 @@
+@media print {
+    div.dashsettings, div.footer {
+        display: none;
+    }
+}
 
 body {
     background-color: lightgray;
+}
+
+form.dashsettings {
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 img.header {
@@ -55,7 +65,7 @@ div.position {
 
 div.footer {
     border-top: 2px solid black;
-    margin-top: 8px;
+    margin-top: 2em;
     padding-top: 8px;
 }
 
@@ -68,7 +78,7 @@ div.stockings {
     padding-left: 4px;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, div.firstPosition {
     clear: both;
 }
 
@@ -87,6 +97,16 @@ input.dateinput, input.deviceId {
 
 input.dateinput {
     width: 105px;
+}
+
+p.stocking {
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+p.isRemoved {
+    color: darkslategrey;
 }
 
 # Icon für collapse

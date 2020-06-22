@@ -3,6 +3,45 @@
 {% block title %}Atemschutz Dashboard{% endblock %}
 
 {% block body %}
+<div class="dashsettings">
+    <form class="dashsettings form-inline" action="#" method="post">
+        <label for="" class="form-check-input mb-2 mr-sm-2">Anzeigefilter: </label>
+        <div class="form-check  mb-2 mr-sm-2">
+            <input type="checkbox" id="showForms" name="showForms" class="form-check-input"
+                    {% if showForms %}checked="checked" {% endif %}/>
+            <label for="showForms" class="form-check-input">Eingabefelder anzeigen</label>
+        </div>
+        {# {{ dump(organisations) }} #}
+
+        <select class="form-control form-control-sm  mb-2 mr-sm-2" name="deviceTypeId" id="deviceTypeId">
+            <option value="0" {% if deviceId == 0 %} selected="selected" {% endif %}>
+                alle Geräte
+            </option>
+        {% for deviceType in deviceTypes %}
+            <option value="{{ deviceType.id }}" {% if deviceId == deviceType.id %} selected="selected" {% endif %}>
+                {{ deviceType.name|e }}
+            </option>
+        {% endfor %}
+        </select>
+    <select class="form-control form-control-sm  mb-2 mr-sm-2" name="maxStockings" id="maxStockings">
+            <option value="1" {% if maxStockings == 1 %}selected="selected" {% endif %}>
+                nur aktuellen Eintrag
+            </option>
+            <option value="3" {% if maxStockings == 3 %}selected="selected" {% endif %}>
+                3 Einträge maximal
+            </option>
+            <option value="10" {% if maxStockings == 10 %}selected="selected" {% endif %}>
+                10 Einträge maximal
+            </option>
+            <option value="99" {% if maxStockings == 99 %}selected="selected" {% endif %}>
+                99 Einträge maximal
+            </option>
+        </select>
+    <button type="submit" name="buttonSettings" class="btn btn-primary mb-2 mr-sm-2">
+            <i class="fas fa-caret-right"></i>
+        </button>
+    </form>
+</div>
 
 <div class="dashboard">
     <h2>Atemschutz Dashboard</h2>
@@ -12,7 +51,7 @@
         <div class="organisation" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
             <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken">
                 <h3 style="background-color: {{ orga.color }}">
-                    {{ orga.name|e }} <i class="fa"></i> 
+                    {{ orga.name|e }} <i class="fa"></i>
                 </h3>
             </a>
             <div id="collapse{{ orga.id }}" class="collapse show">
@@ -20,9 +59,11 @@
             {% for location in orga.locations %}
                 <div class="location">
                     <h4>{{ location.name|e }}</h4>
+                    {% set lastDeviceType = 0 %}
                     {% for position in location.positions %}
                         {% if deviceId == 0 or deviceId == position.deviceType.id %}
-                            <div class="position" style="border-color: {{ position.deviceType.color }}">
+                    <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
+                                 style="border-color: {{ position.deviceType.color }}">
                                 <div class="positionName" style="color: {{ position.deviceType.color }}">
                                     {{ position.name|e }}
                                 </div>
@@ -35,10 +76,13 @@
                                 {% endif %}
                                 <div class="stockings">
                                 {% for stocking in position.stockings.slice(0, maxStockings) %}
-                                    {{ stocking.date|date("d.m.Y") }}
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    {{ stocking.deviceId|e }}
-                                    <br/>
+                                    {% if maxStockings > 1 or not stocking.removed %}
+                                        <p class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
+                                            {{ stocking.date|date("d.m.Y") }}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            {{ stocking.deviceId|e }}
+                                        </p>
+                                    {% endif %}
                                 {% endfor %}
                                 </div>
                             </div>
