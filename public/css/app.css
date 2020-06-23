@@ -105,7 +105,11 @@ h1, h2, h3, h4, h5, div.firstPosition {
     clear: both;
 }
 
-div.position form {
+h1 {
+    padding-top: 0.5rem;
+}
+
+div.position form#formAdd {
     margin-bottom: 4px;
 }
 
@@ -138,9 +142,9 @@ p.isRemoved {
 }
 
 # Icon für collapse
-[data-toggle="collapse"] .fa:before {
+/* [data-toggle="collapse"] .fa:before {
   content: "\f139";
-}
+} */
 
 [data-toggle="collapse"].collapsed  .fa:before {
   content: "\f13a";

@@ -51,12 +51,12 @@
 
     {% for orga in organisations %}
         <div class="organisation" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
-            <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken">
+    <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if app.request.cookies.get( "collapse#{orga.id}" ) != 'show' %}collapsed{% endif %}">
                 <h3 style="background-color: {{ orga.color }}">
                     {{ orga.name|e }} <i class="fa"></i>
                 </h3>
             </a>
-            <div id="collapse{{ orga.id }}" class="collapse show">
+            <div id="collapse{{ orga.id }}" class="collapse {{ app.request.cookies.get( "collapse#{orga.id}" ) }} ">
 
             {% for location in orga.locations %}
                 <div class="location">
@@ -70,17 +70,15 @@
                                     {{ position.name|e }}
                                 </div>
                                 {% if showForms %}
-                                    <form class="" action="#" method="post">
-                                            <input name="date" class="dateinput" type="date" value="{{ "now"|date("Y-m-d") }}"  required="required"/>
-                                            <input name="deviceId" class="deviceId" required="required" />
-                                            <input name="position_id" value="{{ position.id }}" type="hidden" />
-                                            <input type="hidden" name="token" value="{{ csrf_token('add-stocking') }}"/>
-                                    </form>
+                                    {{ include('dashboard/formAdd.html.twig') }}
                                 {% endif %}
                                 <div class="stockings">
                                 {% for stocking in position.stockings.slice(0, maxStockings) %}
                                     {% if maxStockings > 1 or not stocking.removed %}
-                                        <p class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
+                                        {% if not stocking.removed %}
+                                            {{ include('dashboard/formRemove.html.twig') }}
+                                        {% endif %}
+                                        <p class="float-none stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
                                             {{ stocking.date|date("d.m.Y") }}
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             {{ stocking.deviceId|e }}
@@ -98,4 +96,20 @@
         </div>
     {% endfor %}
 </div>
+<script type="text/javascript">
+// remeber state of collapses in cookies
+    $(document).ready( () => {
+        $('.collapse').on('shown.bs.collapse', function ()
+        {
+            var active = $(this).attr('id');
+            Cookies.set(active, "show");  // must be 'show' because it's used as class name
+        });
+        $('.collapse').on('hidden.bs.collapse', function ()
+        {
+            var active = $(this).attr('id');
+            Cookies.remove(active);
+        });
+    });
+</script>
+
 {% endblock %}

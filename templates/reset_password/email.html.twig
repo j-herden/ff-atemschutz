@@ -1,11 +1,13 @@
-<h1>Hallo!</h1>
 
+<h1>Hallo {{ username|e }}!</h1>
 <p>
-    Um dein Passwort zurück zu setzen, besuche bitte 
+    Um dein Passwort zurückzusetzen, besuche bitte
     <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">diese Seite</a>
+</p>
+<p>
     Der Link läuft in {{ tokenLifetime|date('g') }} Stunden ab ...
 </p>
 
 <p>
-    Cheers!
+    Falls du keine Änderung des Passworts angefordert hast, dann kannst du diese E-Mail ignorieren. Dein Passwort hat sich bisher nicht geändert.
 </p>

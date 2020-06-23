@@ -1,0 +1,9 @@
+
+
+
+<form class="formAdd" action="#" method="post">
+        <input name="date" class="dateinput" type="date" value="{{ "now"|date("Y-m-d") }}"  required="required"/>
+        <input name="deviceId" class="deviceId" required="required" />
+        <input name="position_id" value="{{ position.id }}" type="hidden" />
+        <input type="hidden" name="token" value="{{ csrf_token('add-stocking') }}"/>
+</form>

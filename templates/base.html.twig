@@ -11,12 +11,13 @@
         {% block stylesheets %}
 
         {% endblock %}
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     </head>
     <body>
     <div class="container" id="page">
         <div id="header" class="row text-center">
             <div class="col-sm-1">
-                <a href="{{ path('index') }}">
+                <a href="{{ path('dashboard') }}">
                     <img src="{{ asset('img/favicon.svg') }}" class="header" />
                 </a>
             </div>
@@ -35,27 +36,8 @@
                 {% endif %}
             </div>
         </div>
-        {# read and display just one flash message type #}
-        {% for message in app.flashes('notice') %}
-            <div class="alert alert-primary">
-                {{ message }}
-            </div>
-        {% endfor %}
 
-        {# read and display just one flash message type #}
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-
-        {# read and display just one flash message type #}
-        {% for message in app.flashes('warning') %}
-            <div class="alert alert-warning">
-                {{ message }}
-            </div>
-        {% endfor %}
-
+        {{ include('flashMessages.html.twig') }}
 
         {% block body %}  {% endblock %}
 
@@ -79,9 +61,10 @@
         {% endblock %}
 
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
         {% endblock %}
     </div>
     </body>

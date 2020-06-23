@@ -11,6 +11,7 @@ easy_admin:
             - { entity: 'Organisation', icon: 'sitemap' }
             - { entity: 'DeviceTypes', icon: 'tools' }
             - { entity: 'User', icon: 'user' }
+            - { entity: 'ResetPasswordRequest', icon: 'password' }
             - { label: 'Dashboard', route: 'dashboard', icon: 'dashboard' }
     entities:
 #        # List the entity class name you want to manage
@@ -35,3 +36,8 @@ easy_admin:
 
         Positions:
             class: App\Entity\Positions
+
+        ResetPasswordRequest:
+            class: App\Entity\ResetPasswordRequest
+            list:
+                fields: ['id', 'user', 'requestedAt', 'expiresAt' ]
