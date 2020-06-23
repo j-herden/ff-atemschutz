@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StockingsRepository;
+use Gedmo\Mapping\Annotation as Gedmo; // this will be like an alias for Gedmo extensions annotations
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,6 +44,32 @@ class Stockings
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    public function getCreated(): ?\DateTime
+    {
+        return $this->created;
+    }
+
+    public function getUpdated(): ?\DateTime
+    {
+        return $this->updated;
+    }
 
     public function getId(): ?int
     {
@@ -114,4 +141,5 @@ class Stockings
 
         return $this;
     }
+
 }

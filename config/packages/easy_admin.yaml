@@ -1,4 +1,8 @@
 easy_admin:
+    formats:
+        date:     'd.m.Y'
+        time:     'H:i'
+        datetime: 'd.m.Y H:i'
     design:
         menu:
             - { entity: 'Stockings', icon: 'location-arrow' }
@@ -10,9 +14,24 @@ easy_admin:
             - { label: 'Dashboard', route: 'dashboard', icon: 'dashboard' }
     entities:
 #        # List the entity class name you want to manage
-        - App\Entity\Stockings
-        - App\Entity\Organisation
-        - App\Entity\Location
-        - App\Entity\DeviceTypes
-        - App\Entity\User
-        - App\Entity\Positions
+        Stockings:
+            class: App\Entity\Stockings
+            list:
+                filters: [{ property: 'position' }]
+                fields: ['id', 'date', 'device_id', 'removed', 'position', 'user', 'updated', 'created']
+            form:
+                fields: ['date', 'device_id', 'removed', 'position', 'user']
+
+        Organisation:
+            class: App\Entity\Organisation
+
+        Location:
+            class: App\Entity\Location
+
+        DeviceTypes:
+            class: App\Entity\DeviceTypes
+        User:
+            class: App\Entity\User
+
+        Positions:
+            class: App\Entity\Positions

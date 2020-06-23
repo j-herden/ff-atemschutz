@@ -23,13 +23,17 @@ class DashboardController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $this->addStocking($request, $positionsRepo);
+        $submittedToken = $request->request->get('token');
 
+        if ($this->isCsrfTokenValid('add-stocking', $submittedToken))
+        {
+            $this->addStocking($request, $positionsRepo);
+        }
         // settings
         $showForms    = $session->get('dashboard.showForms', true);
         $maxStockings = $session->get('dashboard.maxStockings', 3);
         $deviceId     = $session->get('dashboard.deviceId', 0);
-        if ( ! is_null( $request->request->get('buttonSettings') ) )
+        if ($this->isCsrfTokenValid('change-settings', $submittedToken))
         {
             $showForms = ( $request->request->get('showForms') === 'on' );
 

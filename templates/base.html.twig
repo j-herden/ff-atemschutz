@@ -18,6 +18,17 @@
             <img src="{{ asset('img/favicon.svg') }}" class="header" />
             Feuerwehren Bad Zwesten
         </h1>
+        {% if app.user %}
+            <div class="dropdown aktivUser mb-1">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.name|e }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            </div>
+        {% endif %}
         {# read and display just one flash message type #}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-primary">
@@ -40,17 +51,21 @@
         {% endfor %}
 
 
-        {% block body %}{% endblock %}
+        {% block body %}  {% endblock %}
 
-        <div class="footer">
-            <a href="{{ path('dashboard') }}">Dashboard</a>
-             -
-            <a href="{{ path('about_page') }}">About</a>
-             -
-            <a href="{{ path('impressum') }}">Impressum</a>
-             -
-            <a href="{{ path('easyadmin') }}">Admin</a>
-        </div>
+        {% block footer %}
+        {% if app.user %}
+            <div class="footer mb-2">
+                <a href="{{ path('dashboard') }}">Dashboard</a>
+                 -
+                <a href="{{ path('about_page') }}">About</a>
+                 -
+                <a href="{{ path('impressum') }}">Impressum</a>
+                 -
+                <a href="{{ path('easyadmin') }}">Admin</a>
+            </div>
+        {% endif %}
+        {% endblock %}
 
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

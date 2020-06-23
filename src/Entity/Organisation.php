@@ -25,7 +25,7 @@ class Organisation
     private $Name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="organisation")
+     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="organisation", fetch="EAGER")
      */
     private $locations;
 

@@ -37,7 +37,7 @@ class Positions
     private $deviceType;
 
     /**
-     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position")
+     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position", fetch="EAGER")
      * @ORM\OrderBy({"date" = "DESC"})
      */
     private $Stockings;

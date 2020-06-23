@@ -31,7 +31,7 @@ class Location
     private $organisation;
 
     /**
-     * @ORM\OneToMany(targetEntity=Positions::class, mappedBy="Location")
+     * @ORM\OneToMany(targetEntity=Positions::class, mappedBy="Location", fetch="EAGER")
      * @ORM\OrderBy({"Name" = "ASC"})
      */
     private $positions;

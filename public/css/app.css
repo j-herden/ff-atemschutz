@@ -1,5 +1,5 @@
 @media print {
-    div.dashsettings, div.footer {
+    div.dashsettings, div.footer, div.aktivUser {
         display: none;
     }
 }
@@ -64,7 +64,7 @@ div.position {
 }
 
 div.footer {
-    border-top: 2px solid black;
+    border-top: 2px solid silver;
     margin-top: 2em;
     padding-top: 8px;
 }
@@ -76,6 +76,10 @@ div.positionName {
 
 div.stockings {
     padding-left: 4px;
+}
+
+div.aktivUser {
+    text-align: right;
 }
 
 h1, h2, h3, h4, h5, div.firstPosition {

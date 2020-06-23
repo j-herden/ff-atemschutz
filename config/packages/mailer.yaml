@@ -1,3 +1,7 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+
+        # always to this address
+        envelope:
+            recipients: ['jens@jherden.de']
