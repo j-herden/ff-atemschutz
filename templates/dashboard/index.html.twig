@@ -3,6 +3,8 @@
 {% block title %}Atemschutz Dashboard{% endblock %}
 
 {% block body %}
+<h2>Atemschutz Dashboard</h2>
+
 <div class="dashsettings">
     <form class="dashsettings form-inline" action="#" method="post">
         <label for="" class="form-check-input mb-2 mr-sm-2">Anzeigefilter: </label>
@@ -45,7 +47,6 @@
 </div>
 
 <div class="dashboard">
-    <h2>Atemschutz Dashboard</h2>
 {# {{ dump(organisations) }} #}
 
     {% for orga in organisations %}

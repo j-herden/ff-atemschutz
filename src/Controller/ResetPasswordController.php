@@ -95,7 +95,7 @@ class ResetPasswordController extends AbstractController
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
-                'There was a problem validating your reset request - %s',
+                'Es gab ein Problem beim Prüfen der Rücksetz-Anforderung - %s',
                 $e->getReason()
             ));
 
@@ -148,7 +148,7 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
-                'There was a problem handling your password reset request - %s',
+                'Es gab ein Problem deine Anforderung zu verarbeiten - %s',
                 $e->getReason()
             ));
 
@@ -158,7 +158,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('jens@jherden.de', 'Jens Herden'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Passwort auf atemschutz.jherden.de zurück setzen')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

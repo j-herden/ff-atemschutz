@@ -5,30 +5,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml" >
         <title>{% block title %}Feuerwehren Bad Zwesten / Atemschutz{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/3d8281fe7f.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         {% block stylesheets %}
 
         {% endblock %}
     </head>
     <body>
     <div class="container" id="page">
-        <h1>
-            <img src="{{ asset('img/favicon.svg') }}" class="header" />
-            Feuerwehren Bad Zwesten
-        </h1>
-        {% if app.user %}
-            <div class="dropdown aktivUser mb-1">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ app.user.name|e }}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
-                    <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
-                </div>
+        <div id="header" class="row text-center">
+            <div class="col-sm-1">
+                <a href="{{ path('index') }}">
+                    <img src="{{ asset('img/favicon.svg') }}" class="header" />
+                </a>
             </div>
-        {% endif %}
+            <div class="col-sm">
+                <h1>Feuerwehren Bad Zwesten</h1>
+            </div>
+            <div class="dropdown aktivUser col-sm-3">
+                {% if app.user %}
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ app.user.name|e }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
         {# read and display just one flash message type #}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-primary">
@@ -54,17 +60,22 @@
         {% block body %}  {% endblock %}
 
         {% block footer %}
-        {% if app.user %}
-            <div class="footer mb-2">
+        <div class="footer row text-center">
+            <div class="col-sm">
                 <a href="{{ path('dashboard') }}">Dashboard</a>
-                 -
-                <a href="{{ path('about_page') }}">About</a>
-                 -
-                <a href="{{ path('impressum') }}">Impressum</a>
-                 -
-                <a href="{{ path('easyadmin') }}">Admin</a>
             </div>
-        {% endif %}
+            <div class="col-sm">
+                <a href="{{ path('about_page') }}">Info</a>
+            </div>
+            <div class="col-sm">
+                <a href="{{ path('impressum') }}">Impressum</a>
+            </div>
+            <div class="col-sm">
+            {% if app.user %}
+                <a href="{{ path('easyadmin') }}">Admin</a>
+            {% endif %}
+            </div>
+        </div>
         {% endblock %}
 
         {% block javascripts %}
