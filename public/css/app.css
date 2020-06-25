@@ -130,14 +130,14 @@ input.dateinput {
     width: 100px;
 }
 
-p.stocking {
+span.stocking {
     margin: 0;
     padding: 0;
     color: black;
     font-weight: bold;
 }
 
-p.isRemoved {
+span.isRemoved {
     font-weight: normal;
 }
 

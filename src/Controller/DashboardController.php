@@ -29,7 +29,8 @@ class DashboardController extends AbstractController
         // settings
         $showForms    = $session->get('dashboard.showForms', true);
         $maxStockings = $session->get('dashboard.maxStockings', 3);
-        $deviceId     = $session->get('dashboard.deviceId', 0);
+        $deviceTypeId = $session->get('dashboard.deviceTypeId', 0);
+        $deviceFilter = $session->get('dashboard.deviceFilter', '');
         if ($this->isCsrfTokenValid('change-settings', $submittedToken))
         {
             $showForms = ( $request->request->get('showForms') === 'on' );
@@ -40,10 +41,16 @@ class DashboardController extends AbstractController
                 $maxStockings = intval( $formMaxStockings );
             }
 
-            $formDeviceId = $request->request->get('deviceTypeId');
-            if ( ! is_null( $formDeviceId ) )
+            $formDeviceTypeId = $request->request->get('deviceTypeId');
+            if ( ! is_null( $formDeviceTypeId ) )
             {
-                $deviceId = intval( $formDeviceId );
+                $deviceTypeId = intval( $formDeviceTypeId );
+            }
+
+            $formDeviceFilter = $request->request->get('deviceFilter');
+            if ( ! is_null( $formDeviceFilter ) )
+            {
+                $deviceFilter = $formDeviceFilter;
             }
         }
         elseif ($this->isCsrfTokenValid('add-stocking', $submittedToken))
@@ -61,14 +68,16 @@ class DashboardController extends AbstractController
 
         $session->set('dashboard.showForms',    $showForms);
         $session->set('dashboard.maxStockings', $maxStockings);
-        $session->set('dashboard.deviceId',     $deviceId);
+        $session->set('dashboard.deviceTypeId', $deviceTypeId);
+        $session->set('dashboard.deviceFilter', $deviceFilter);
 
         return $this->render('dashboard/index.html.twig', [
             'organisations' => $organisations,
             'deviceTypes'   => $deviceTypes,
             'showForms'     => $showForms,
-            'deviceId'      => $deviceId,
+            'deviceTypeId'  => $deviceTypeId,
             'maxStockings'  => $maxStockings,
+            'deviceFilter'  => $deviceFilter,
         ]);
     }
 

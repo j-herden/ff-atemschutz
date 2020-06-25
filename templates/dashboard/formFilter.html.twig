@@ -1,0 +1,41 @@
+
+
+<form class="dashsettings form-inline" action="#" method="post">
+    <label for="" class="form-check-input mb-2 mr-sm-2">Anzeigefilter: </label>
+    <div class="form-check  mb-2 mr-sm-2">
+        <input type="checkbox" id="showForms" name="showForms" class="form-check-input"
+                {% if showForms %}checked="checked" {% endif %}/>
+        <label for="showForms" class="form-check-input">Eingabefelder zeigen</label>
+    </div>
+    {# {{ dump(organisations) }} #}
+
+    <select class="form-control form-control-sm mb-2 mr-sm-2" name="deviceTypeId" id="deviceTypeId">
+        <option value="0" {% if deviceTypeId == 0 %} selected="selected" {% endif %}>
+            alle Geräte
+        </option>
+    {% for deviceType in deviceTypes %}
+        <option value="{{ deviceType.id }}" {% if deviceTypeId == deviceType.id %} selected="selected" {% endif %}>
+            {{ deviceType.name|e }}
+        </option>
+    {% endfor %}
+    </select>
+    <select class="form-control form-control-sm  mb-2 mr-sm-2" name="maxStockings" id="maxStockings">
+        <option value="1" {% if maxStockings == 1 %}selected="selected" {% endif %}>
+            letzten Eintrag
+        </option>
+        <option value="3" {% if maxStockings == 3 %}selected="selected" {% endif %}>
+            max 3 Einträge
+        </option>
+        <option value="10" {% if maxStockings == 10 %}selected="selected" {% endif %}>
+            max 10 Einträge
+        </option>
+        <option value="99" {% if maxStockings == 99 %}selected="selected" {% endif %}>
+            max 99 Einträge
+        </option>
+    </select>
+    <input type="text" class="form-control form-control-sm  mb-2 mr-sm-2" name="deviceFilter" value="{{ deviceFilter }}" placeholder="Gerätenummer" />
+    <input type="hidden" name="token" value="{{ csrf_token('change-settings') }}"/>
+    <button type="submit" name="buttonSettings" class="btn btn-primary mb-2 mr-sm-2">
+        <i class="fas fa-caret-right"></i>
+    </button>
+</form>

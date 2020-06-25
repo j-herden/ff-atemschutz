@@ -6,44 +6,7 @@
 <h2>Atemschutz Dashboard</h2>
 
 <div class="dashsettings">
-    <form class="dashsettings form-inline" action="#" method="post">
-        <label for="" class="form-check-input mb-2 mr-sm-2">Anzeigefilter: </label>
-        <div class="form-check  mb-2 mr-sm-2">
-            <input type="checkbox" id="showForms" name="showForms" class="form-check-input"
-                    {% if showForms %}checked="checked" {% endif %}/>
-            <label for="showForms" class="form-check-input">Eingabefelder anzeigen</label>
-        </div>
-        {# {{ dump(organisations) }} #}
-
-        <select class="form-control form-control-sm  mb-2 mr-sm-2" name="deviceTypeId" id="deviceTypeId">
-            <option value="0" {% if deviceId == 0 %} selected="selected" {% endif %}>
-                alle Geräte
-            </option>
-        {% for deviceType in deviceTypes %}
-            <option value="{{ deviceType.id }}" {% if deviceId == deviceType.id %} selected="selected" {% endif %}>
-                {{ deviceType.name|e }}
-            </option>
-        {% endfor %}
-        </select>
-    <select class="form-control form-control-sm  mb-2 mr-sm-2" name="maxStockings" id="maxStockings">
-        <option value="1" {% if maxStockings == 1 %}selected="selected" {% endif %}>
-            nur aktuellen Eintrag
-        </option>
-        <option value="3" {% if maxStockings == 3 %}selected="selected" {% endif %}>
-            3 Einträge maximal
-        </option>
-        <option value="10" {% if maxStockings == 10 %}selected="selected" {% endif %}>
-            10 Einträge maximal
-        </option>
-        <option value="99" {% if maxStockings == 99 %}selected="selected" {% endif %}>
-            99 Einträge maximal
-        </option>
-    </select>
-    <input type="hidden" name="token" value="{{ csrf_token('change-settings') }}"/>
-    <button type="submit" name="buttonSettings" class="btn btn-primary mb-2 mr-sm-2">
-            <i class="fas fa-caret-right"></i>
-        </button>
-    </form>
+    {{ include('dashboard/formFilter.html.twig') }}
 </div>
 
 <div class="dashboard">
@@ -51,65 +14,82 @@
 
     {% for orga in organisations %}
         <div class="organisation" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
-    <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if app.request.cookies.get( "collapse#{orga.id}" ) != 'show' %}collapsed{% endif %}">
+
+    {%set isCollapsed = app.request.cookies.get( "collapse#{orga.id}" ) == 'collapsed' %}
+
+    <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if isCollapsed %}collapsed{% endif %}">
                 <h3 style="background-color: {{ orga.color }}">
                     {{ orga.name|e }} <i class="fa"></i>
                 </h3>
             </a>
-            <div id="collapse{{ orga.id }}" class="collapse {{ app.request.cookies.get( "collapse#{orga.id}" ) }} ">
+        <div id="collapse{{ orga.id }}" class="collapse {% if not isCollapsed %}show{% endif %} ">
 
             {% for location in orga.locations %}
                 <div class="location">
                     <h4>{{ location.name|e }}</h4>
                     {% set lastDeviceType = 0 %}
+
                     {% for position in location.positions %}
-                        {% if deviceId == 0 or deviceId == position.deviceType.id %}
-                            <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
-                                 style="border-color: {{ position.deviceType.color }}">
-                                <div class="positionName" style="color: {{ position.deviceType.color }}">
-                                    {{ position.name|e }}
-                                </div>
-                                {% if showForms %}
-                                    {{ include('dashboard/formAdd.html.twig') }}
-                                {% endif %}
-                                <div class="stockings">
-                                {% for stocking in position.stockings.slice(0, maxStockings) %}
-                                    {% if maxStockings > 1 or not stocking.removed %}
-                                        {% if not stocking.removed %}
-                                            {{ include('dashboard/formRemove.html.twig') }}
-                                        {% endif %}
-                                        <p class="float-none stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
-                                            {{ stocking.date|date("d.m.Y") }}
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            {{ stocking.deviceId|e }}
-                                        </p>
+                        {% if position.CountStockings(deviceFilter) > 0 %}
+                            {% if deviceTypeId == 0 or deviceTypeId == position.deviceType.id %}
+                                <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
+                                     style="border-color: {{ position.deviceType.color }}">
+                                    <div class="positionName" style="color: {{ position.deviceType.color }}">
+                                        {{ position.name|e }}
+                                    </div>
+                                    {% if showForms %}
+                                        {{ include('dashboard/formAdd.html.twig') }}
                                     {% endif %}
-                                {% endfor %}
+                                    <div class="stockings">
+                                    {% set count = 1 %}
+                                    {% for stocking in position.stockings %}
+                                        {% if count <= maxStockings and
+                                                ( deviceFilter == '' or deviceFilter == stocking.deviceId ) %}
+                                            {% set count = count + 1 %}
+                                            <div>
+                                                <span class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
+                                                    {{ stocking.date|date("d.m.Y") }}
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    {{ stocking.deviceId|e }}
+                                                </span>
+                                                {% if not stocking.removed %}
+                                                    {{ include('dashboard/formRemove.html.twig') }}
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </div>
-
             {% endfor %}
             </div>
         </div>
     {% endfor %}
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
 <script type="text/javascript">
 // remeber state of collapses in cookies
     $(document).ready( () => {
+        // console.log('Hi there');
         $('.collapse').on('shown.bs.collapse', function ()
         {
-            var active = $(this).attr('id');
-            Cookies.set(active, "show");  // must be 'show' because it's used as class name
+            // console.log('shown.bs.collapse');
+            var name = $(this).attr('id');
+            Cookies.remove(name);
         });
         $('.collapse').on('hidden.bs.collapse', function ()
         {
-            var active = $(this).attr('id');
-            Cookies.remove(active);
+            // console.log('hidden.bs.collapse');
+            var name = $(this).attr('id');
+            Cookies.set(name, 'collapsed');
         });
     });
 </script>
-
 {% endblock %}

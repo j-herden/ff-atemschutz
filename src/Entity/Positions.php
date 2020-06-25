@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Stockings;
 use App\Repository\PositionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -122,5 +123,27 @@ class Positions
         }
 
         return $this;
+    }
+
+    /*
+     *   calculate the number of stockings matching a device_id on this position
+     *
+     *   $deviceId may be emtpy, then the total numbers of stockings is replied
+     */
+    public function getCountStockings(string $deviceId): int
+    {
+        if ( $deviceId === '' )
+        {
+            return count( $this->getStockings() );
+        }
+        $count = 0;
+        foreach ($this->getStockings() as $stocking)
+        {
+            if ( $stocking->getDeviceId() == $deviceId )
+            {
+                ++$count;
+            }
+        }
+        return $count;
     }
 }

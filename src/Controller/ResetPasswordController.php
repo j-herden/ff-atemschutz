@@ -44,7 +44,8 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
-                $mailer
+                $mailer,
+                $request
             );
         }
 
@@ -129,7 +130,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, Request $request): RedirectResponse
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -157,7 +158,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('jens@jherden.de', 'Jens Herden'))
             ->to($user->getEmail())
-            ->subject('Passwort auf atemschutz.jherden.de zurücksetzen')
+            ->subject('Passwort auf ' . $request->getHost() . ' zurücksetzen')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken'    => $resetToken,

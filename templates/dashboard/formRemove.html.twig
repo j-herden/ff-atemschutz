@@ -1,6 +1,6 @@
 
 
-<form class="float-right" action="#" method="post" style="height: 20px;">
+<form class="" action="#" method="post" style="height: 20px; display: inline-block">
         <input name="stockingId" value="{{ stocking.id }}" type="hidden" />
         <input type="hidden" name="token" value="{{ csrf_token('remove-stocking') }}"/>
         <button class="btn btn-sm btn-outline-danger rounded-circle" type="submit" name="removeStocking" title="Gerät entnehmen" style="line-height: 50%; border: none;">

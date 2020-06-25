@@ -11,7 +11,7 @@ easy_admin:
             - { entity: 'Organisation', icon: 'sitemap' }
             - { entity: 'DeviceTypes', icon: 'tools' }
             - { entity: 'User', icon: 'user' }
-            - { entity: 'ResetPasswordRequest', icon: 'password' }
+            - { entity: 'ResetPasswordRequest', icon: 'unlock' }
             - { label: 'Dashboard', route: 'dashboard', icon: 'dashboard' }
     entities:
 #        # List the entity class name you want to manage
