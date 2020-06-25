@@ -25,12 +25,12 @@
         <div id="collapse{{ orga.id }}" class="collapse {% if not isCollapsed %}show{% endif %} ">
 
             {% for location in orga.locations %}
-                <div class="location">
+                <div class="location" style="border-bottom: 1px solid {{ orga.color }};" id="location{{ location.id }}">
                     <h4>{{ location.name|e }}</h4>
                     {% set lastDeviceType = 0 %}
 
                     {% for position in location.positions %}
-                        {% if position.CountStockings(deviceFilter) > 0 %}
+                        {% if showForms or position.CountStockings(deviceFilter) > 0 %}
                             {% if deviceTypeId == 0 or deviceTypeId == position.deviceType.id %}
                                 <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
                                      style="border-color: {{ position.deviceType.color }}">
@@ -40,13 +40,13 @@
                                     {% if showForms %}
                                         {{ include('dashboard/formAdd.html.twig') }}
                                     {% endif %}
-                                    <div class="stockings">
+                                    <div class="stockings" >
                                     {% set count = 1 %}
                                     {% for stocking in position.stockings %}
                                         {% if count <= maxStockings and
                                                 ( deviceFilter == '' or deviceFilter == stocking.deviceId ) %}
                                             {% set count = count + 1 %}
-                                            <div>
+                                            <div title="angelegt am {{ stocking.getCreated|date('d.m.Y') }}&#x0avon {{stocking.user.name}}">
                                                 <span class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
                                                     {{ stocking.date|date("d.m.Y") }}
                                                     &nbsp;&nbsp;&nbsp;&nbsp;

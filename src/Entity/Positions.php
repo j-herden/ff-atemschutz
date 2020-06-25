@@ -38,7 +38,7 @@ class Positions
     private $deviceType;
 
     /**
-     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position")
      * @ORM\OrderBy({"date" = "DESC"})
      */
     private $Stockings;
@@ -104,11 +104,36 @@ class Positions
 
     public function addStocking(Stockings $stocking): self
     {
-        if (!$this->Stockings->contains($stocking)) {
+        if ( ! $this->Stockings->contains($stocking) )
+        {
+            //  mark older stockings removed if the new one is not removed yet
+            if ( ! $stocking->getRemoved() )
+            {
+                $newDate = $stocking->getDate();
+                foreach ($this->Stockings as $s)
+                {
+                    if ( $s->isOlderThan( $newDate ) )
+                    {
+                        $s->setRemoved( true );
+                    }
+                }
+            }
+            // now add it
             $this->Stockings[] = $stocking;
             $stocking->setPosition($this);
-        }
 
+            // keep sorting correct
+            // Collect an array iterator.
+            $iterator = $this->Stockings->getIterator();
+
+            // Do sort the new iterator.
+            $iterator->uasort( function ($a, $b) {
+                                    return ($b->getDate() <=> $a->getDate() );
+                                });
+
+            // pass sorted array to ArrayCollection.
+            $this->Stockings = new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator));
+        }
         return $this;
     }
 
@@ -130,12 +155,13 @@ class Positions
      *
      *   $deviceId may be emtpy, then the total numbers of stockings is replied
      */
-    public function getCountStockings(string $deviceId): int
+    public function countStockings(string $deviceId): int
     {
         if ( $deviceId === '' )
         {
             return count( $this->getStockings() );
         }
+
         $count = 0;
         foreach ($this->getStockings() as $stocking)
         {
@@ -146,4 +172,5 @@ class Positions
         }
         return $count;
     }
+
 }

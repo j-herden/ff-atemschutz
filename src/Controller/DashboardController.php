@@ -106,11 +106,11 @@ class DashboardController extends AbstractController
 
     private function addStocking(Request $request, PositionsRepository $positionsRepo)
     {
-        $deviceId    = intval( $request->request->get('deviceId') );
+        $deviceId    = $request->request->get('deviceId') ;
         $position_id = intval( $request->request->get('position_id') );
         $date        = $request->request->get('date');
 
-        if ( ! $deviceId or ! $position_id or ! $date )
+        if ( is_null( $deviceId ) or is_null( $position_id ) or is_null( $date ) )
         {
             $this->addFlash('error', __METHOD__ . " Formulardaten fehlerhaft");
             return;

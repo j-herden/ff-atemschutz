@@ -164,6 +164,7 @@ class ResetPasswordController extends AbstractController
                 'resetToken'    => $resetToken,
                 'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
                 'username'      => $user->getName(),
+                'loginemail'    => $user->getEmail(),
             ])
         ;
 

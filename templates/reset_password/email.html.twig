@@ -1,5 +1,8 @@
 
 <h1>Hallo {{ username|e }}!</h1>
+
+<p>
+    Dein E-Mailadresse für das Login lautet: {{ loginemail|e }}
 <p>
     Um dein Passwort zurückzusetzen, besuche bitte
     <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">diese Seite</a>

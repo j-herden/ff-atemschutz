@@ -142,4 +142,9 @@ class Stockings
         return $this;
     }
 
+    public function isOlderThan( \DateTimeInterface $date ) : bool
+    {
+        return $this->getDate() < $date;
+    }
+
 }

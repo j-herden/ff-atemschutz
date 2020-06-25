@@ -57,8 +57,7 @@ div.organisation h3 {
 }
 
 div.location {
-    margin-bottom: 8px;
-    /* border-bottom: 2px solid silver; */
+    padding-bottom: 0.5rem;
     height: auto;
     overflow: hidden;
     padding-top: 0;
@@ -66,6 +65,7 @@ div.location {
 
 div.location h4 {
     margin: 0;
+    margin-top: 0.5rem;
     padding: 8px;
     font-size: 100%;
     font-weight: bold;
@@ -117,7 +117,7 @@ div.position input:focus {
     background-color: yellow;
 }
 
-input.dateinput, input.deviceId {
+div.position input.dateinput, div.position input.deviceId {
     width: 90px;
     height: 24px;
     padding: 2px;
@@ -126,8 +126,8 @@ input.dateinput, input.deviceId {
     border-radius: 2px;
 }
 
-input.dateinput {
-    width: 100px;
+div.position input.dateinput {
+    width: 104px;
 }
 
 span.stocking {
