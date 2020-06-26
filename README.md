@@ -6,3 +6,6 @@ yarnpkg encore dev
 
 bei Änderungen aktualisieren:
 yarnpkg encore dev --watch
+
+
+nur ein test
