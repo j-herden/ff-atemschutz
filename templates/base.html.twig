@@ -43,7 +43,7 @@
         {% block footer %}
         <div class="footer row text-center">
             <div class="col-sm">
-            {% if app.user %}
+            {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('dashboard') }}">Dashboard</a>
             {% endif %}
             </div>
