@@ -43,7 +43,9 @@
         {% block footer %}
         <div class="footer row text-center">
             <div class="col-sm">
+            {% if app.user %}
                 <a href="{{ path('dashboard') }}">Dashboard</a>
+            {% endif %}
             </div>
             <div class="col-sm">
                 <a href="{{ path('about_page') }}">Info</a>
@@ -52,7 +54,7 @@
                 <a href="{{ path('impressum') }}">Impressum</a>
             </div>
             <div class="col-sm">
-            {% if app.user %}
+            {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('easyadmin') }}">Admin</a>
             {% endif %}
             </div>
