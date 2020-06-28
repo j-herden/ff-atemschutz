@@ -1,7 +1,7 @@
 monolog:
     handlers:
         auth:
-            level:    warning
+            level:    info
             type:     stream
             path:     '%kernel.logs_dir%/auth.log'
             channels: [auth]
