@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserChangePassword;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $authLogger)
     {
         // 1) build the form
         $user = new User();
@@ -39,6 +40,8 @@ class ProfileController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', "Das Passwort wurde geändert");
+                $authLogger->info( 'Password changed ' . $this->getUser()->getUsername() );
+
                 return $this->redirect($request->getUri());
             }
             else {
