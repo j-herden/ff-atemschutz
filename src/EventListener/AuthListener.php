@@ -14,19 +14,19 @@ class AuthListener
 {
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $authLogger)
     {
-        $this->logger = $logger;
+        $this->logger = $authLogger;
     }
 
     public function onLogout( LogoutEvent $event )
     {
-        $this->logger->warning( 'Logout ' . $event->getToken()->getUsername() );
+        $this->logger->info( 'Logout ' . $event->getToken()->getUsername() );
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        $this->logger->warning( 'Login ' . $event->getAuthenticationToken()->getUsername() );
+        $this->logger->info( 'Login ' . $event->getAuthenticationToken()->getUsername() );
     }
 
 }

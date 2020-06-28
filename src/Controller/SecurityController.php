@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, LoggerInterface $logger): Response
+    public function login(AuthenticationUtils $authenticationUtils, LoggerInterface $authLogger): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
 
         if ( $error )
         {
-            $logger->error( "Login for $lastUsername: " . $error->getMessageKey() );
+            $authLogger->warning( "Login for $lastUsername: " . $error->getMessageKey() );
         }
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
