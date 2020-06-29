@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\DeviceTypes;
+use App\Entity\Location;
+use App\Entity\Organisation;
 use App\Entity\Stockings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,15 +38,26 @@ class StockingsRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Stockings
+    public function findCurrent(): array
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('s.date, s.device_id')
+            ->andWhere('s.removed = :removed')
+            ->setParameter('removed', false)
+            ->leftJoin('s.position', 'pos')
+            ->addSelect('pos.Name as posName')
+            ->leftJoin(DeviceTypes::class, 'dt', Join::WITH, 'dt.id = pos.deviceType')
+            ->addSelect('dt.Name as dtName, dt.color as dtColor')
+            ->leftJoin(Location::class, 'loc', Join::WITH, 'loc.id = pos.Location')
+            ->addSelect('loc.Name as locName')
+            ->leftJoin(Organisation::class, 'org', Join::WITH, 'org.id = loc.organisation')
+            ->addSelect('org.Name as orgName, org.color as orgColor')
+            ->orderBy('org.Name', 'ASC')
+            ->addOrderBy('dt.Name', 'ASC')
+            ->addOrderBy('loc.Name', 'ASC')
+            ->addOrderBy('pos.Name', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
 }

@@ -43,15 +43,20 @@
         {% block footer %}
         <div class="footer row text-center">
             <div class="col-sm">
+                <a href="{{ path('about_page') }}">Info</a>
+            </div>
+            <div class="col-sm">
+                <a href="{{ path('impressum') }}">Impressum</a>
+            </div>
+            <div class="col-sm">
             {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('dashboard') }}">Dashboard</a>
             {% endif %}
             </div>
             <div class="col-sm">
-                <a href="{{ path('about_page') }}">Info</a>
-            </div>
-            <div class="col-sm">
-                <a href="{{ path('impressum') }}">Impressum</a>
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('lists') }}">Listen</a>
+            {% endif %}
             </div>
             <div class="col-sm">
             {% if is_granted('ROLE_ADMIN') %}

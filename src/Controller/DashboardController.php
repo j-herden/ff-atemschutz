@@ -123,7 +123,6 @@ class DashboardController extends AbstractController
             return;
         }
 
-
         if ( !  \is_numeric($position_id) )
         {
             $this->addFlash('error', __METHOD__ . "position_id nicht numerisch");
