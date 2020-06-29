@@ -13,6 +13,8 @@ class ListsController extends AbstractController
      */
     public function index(StockingsRepository $stockingsRepo)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         $stockings  = $stockingsRepo->findCurrent();
 
         return $this->render('lists/index.html.twig', [
