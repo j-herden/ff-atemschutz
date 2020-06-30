@@ -1,37 +1,12 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Atemschutz Listenansicht{% endblock %}
 
 {% block body %}
-<h2>Atemschutz Listenansicht</h2>
 
-{# {{ dump(stockings[0]) }} #}
+{{ include('pdfdownload.html.twig') }}
 
-<table class="table table-sm table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Organisation</th>
-            <th scope="col">Gerätenr.</th>
-            <th scope="col">Gerätetyp</th>
-            <th scope="col">Datum</th>
-            <th scope="col">Standort</th>
-            <th scope="col">Lagerplatz</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for stocking in stockings %}
-        {# {{ dump(stocking) }} #}
-            <tr>
-                <td style="border-left: 6px solid {{stocking.orgColor}};">{{ stocking.orgName }}</td>
-                <td>{{ stocking.device_id }}</th>
-                <td style="color: {{stocking.dtColor}};">{{ stocking.dtName }}</td>
-                <td>{{ stocking.date|date('d.m.Y') }}</td>
-                <td>{{ stocking.locName }}</td>
-                <td style="border-right: 6px solid {{stocking.orgColor}};">{{ stocking.posName }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+{{ include('lists/body.html.twig') }}
 
 {% endblock %}
