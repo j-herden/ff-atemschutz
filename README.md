@@ -1,11 +1,6 @@
 # ff-agt
 Standortübersicht für Geräte der Feuerwehr
 
-assets einmal aktualisieren:
-yarnpkg encore dev
+Nicht vergessen in PHP dies zu setzten, damit die Logs die richtige Zeit haben:
 
-bei Änderungen aktualisieren:
-yarnpkg encore dev --watch
-
-
-nur ein test
+date.timezone='Europe/Berlin'
