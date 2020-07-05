@@ -1,7 +1,22 @@
 @media print {
-    div.dashsettings, div.footer, div.aktivUser {
-        display: none;
+    div.dashsettings, div.footer, .pdfdownload, .dashboard form.formAdd, .dashboard form.formRemove
+    , .sf-display-none, .dashboard .collapsed , #dropdownMenuButton
+    , .dashboard .dropdown-menu {
+        display: none !important;
     }
+    body {
+        background-color: white !important;
+    }
+}
+
+
+.table thead th {
+    border: none;
+}
+
+form.formRemove {
+    height: 20px;
+    display: inline-block;
 }
 
 /* workaround für Chromium */

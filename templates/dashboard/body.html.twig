@@ -1,0 +1,64 @@
+
+<div class="dashboard">
+{# {{ dump(organisations) }} #}
+
+    {% for orga in organisations %}
+        <div class="organisation" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
+
+    {%set isCollapsed = app.request.cookies.get( "collapse#{orga.id}" ) == 'collapsed' %}
+
+    <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if isCollapsed %}collapsed{% endif %}">
+                <h3 style="background-color: {{ orga.color }}">
+                    {{ orga.name|e }} <i class="fa"></i>
+                </h3>
+            </a>
+        <div id="collapse{{ orga.id }}" class="collapse {% if not isCollapsed %}show{% endif %} ">
+
+            {% for location in orga.locations %}
+                <div class="location" style="border-bottom: 1px solid {{ orga.color }};" id="location{{ location.id }}">
+                    <h4>{{ location.name|e }}</h4>
+                    {% set lastDeviceType = 0 %}
+
+                    {% for position in location.positions %}
+                        {% if position.CountStockings(deviceFilter) > 0 %}
+                            {% if deviceTypeId == 0 or deviceTypeId == position.deviceType.id %}
+                                <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
+                                     style="border-color: {{ position.deviceType.color }}">
+                                    <div class="positionName" style="color: {{ position.deviceType.color }}">
+                                        {{ position.name|e }}
+                                    </div>
+                                    {% if showForms %}
+                                        {{ include('dashboard/formAdd.html.twig') }}
+                                    {% endif %}
+                                    <div class="stockings" >
+                                    {% set count = 1 %}
+                                    {% for stocking in position.stockings %}
+                                        {% if count <= maxStockings and
+                                                ( deviceFilter == '' or deviceFilter == stocking.deviceId ) %}
+                                            {% set count = count + 1 %}
+                                            <div title="angelegt am {{ stocking.getCreated|date('d.m.Y') }}&#x0avon {{stocking.user.name}}">
+                                                <span class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
+                                                    {{ stocking.date|date("d.m.Y") }}
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    {{ stocking.deviceId|e }}
+                                                </span>
+                                                {% if not stocking.removed %}
+                                                    {{ include('dashboard/formRemove.html.twig') }}
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="createdat">
+    erzeugt am {{ 'now' | date('d.m.Y') }}
+</div>

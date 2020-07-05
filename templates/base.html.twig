@@ -3,11 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml" >
+        <link rel="icon" href="{{ absolute_url( asset('img/favicon.svg') ) }}" type="image/svg+xml" >
         <title>{% block title %}Feuerwehren Bad Zwesten / Atemschutz{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/3d8281fe7f.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ absolute_url( asset('css/app.css') ) }}">
         {% block stylesheets %}
 
         {% endblock %}
@@ -17,10 +17,10 @@
         <div id="header" class="row text-center">
             <div class="col-sm-1">
                 <a href="{{ path('dashboard') }}">
-                    <img src="{{ asset('img/favicon.svg') }}" class="header" />
+                    <img src="{{ absolute_url( asset('img/favicon.svg') ) }}" class="header" />
                 </a>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-8">
                 <h1>Feuerwehren Bad Zwesten</h1>
             </div>
             <div class="dropdown aktivUser col-sm-3">

@@ -10,17 +10,22 @@ use App\Repository\DeviceTypesRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\PositionsRepository;
 use App\Repository\StockingsRepository;
+use \Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
     /**
-     * @Route("/dashboard", name="dashboard")
+     * @Route("/dashboard{type}", name="dashboard")
      */
-    public function index(Request $request, OrganisationRepository $organisationRepo, PositionsRepository $positionsRepo, DeviceTypesRepository $deviceTypesRepo, SessionInterface $session, StockingsRepository $stockingsRepo)
+    public function index(string $type = '', Request $request, OrganisationRepository $organisationRepo
+                        , PositionsRepository $positionsRepo, DeviceTypesRepository $deviceTypesRepo
+                        , SessionInterface $session, StockingsRepository $stockingsRepo
+                        , Pdf $snappy)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -71,6 +76,25 @@ class DashboardController extends AbstractController
         $session->set('dashboard.deviceTypeId', $deviceTypeId);
         $session->set('dashboard.deviceFilter', $deviceFilter);
 
+        if ( $type === '.pdf' )
+        {
+            $html = $this->renderView('dashboard/index.html.twig', [
+                'organisations' => $organisations,
+                'deviceTypes'   => $deviceTypes,
+                'showForms'     => false,
+                'deviceTypeId'  => $deviceTypeId,
+                'maxStockings'  => $maxStockings,
+                'deviceFilter'  => $deviceFilter,
+            ]);
+
+            $pdf = $snappy->getOutputFromHtml( $html );
+            return new Response(
+                $pdf, 200, [
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'attachment; filename="Atemschutz-Dashboard.pdf"'
+            ]);
+        }
+
         return $this->render('dashboard/index.html.twig', [
             'organisations' => $organisations,
             'deviceTypes'   => $deviceTypes,
@@ -80,7 +104,6 @@ class DashboardController extends AbstractController
             'deviceFilter'  => $deviceFilter,
         ]);
     }
-
 
     private function removeStocking(Request $request, StockingsRepository $stockingsRepo)
     {
