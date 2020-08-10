@@ -1,6 +1,6 @@
 
 
-<form class="formRemove" action="#" method="post">
+<form class="formRemove" action="#" method="post" onsubmit="return confirm('Soll das Geräte entnommen werden?')">
         <input name="stockingId" value="{{ stocking.id }}" type="hidden" />
         <input type="hidden" name="token" value="{{ csrf_token('remove-stocking') }}"/>
         <button class="btn btn-sm btn-outline-danger rounded-circle" type="submit" name="removeStocking" title="Gerät entnehmen" style="line-height: 50%; border: none;">
