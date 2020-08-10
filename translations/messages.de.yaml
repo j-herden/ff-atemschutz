@@ -1,7 +1,7 @@
 # Datenbank-Strings
 ID : ID
-Location : Standort
-Organisation : Organisation
+Location : Standorte
+Organisation : Organisationen
 Name : Name
 DeviceTypes : Gerätetypen
 Stockings : Einlagerungen
@@ -17,7 +17,7 @@ Removed : entnommen
 Created: angelegt
 Updated: geändert
 Dashboard: Dashboard
-Position: Position
+Position: Positionen
 Email: E-Mailadresse
 Requested at: Angefordert am
 Expires at: Ablaufdatum
