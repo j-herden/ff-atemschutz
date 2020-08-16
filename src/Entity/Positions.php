@@ -39,7 +39,7 @@ class Positions
 
     /**
      * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position")
-     * @ORM\OrderBy({"date" = "DESC"})
+     * @ORM\OrderBy({"date" = "DESC", "updated" = "DESC"})
      */
     private $Stockings;
 
@@ -95,6 +95,17 @@ class Positions
     }
 
     /**
+     *  set for all stockings in this position: removed = true
+     */
+    public function setStockingsRemoved()
+    {
+        foreach ($this->Stockings as $s)
+        {
+            $s->setRemoved( true );
+        }
+    }
+
+    /**
      * @return Collection|Stockings[]
      */
     public function getStockings(): Collection
@@ -109,14 +120,7 @@ class Positions
             //  mark older stockings removed if the new one is not removed yet
             if ( ! $stocking->getRemoved() )
             {
-                $newDate = $stocking->getDate();
-                foreach ($this->Stockings as $s)
-                {
-                    if ( $s->isOlderThan( $newDate ) )
-                    {
-                        $s->setRemoved( true );
-                    }
-                }
+                $this->setStockingsRemoved();
             }
             // now add it
             $this->Stockings[] = $stocking;
@@ -128,7 +132,12 @@ class Positions
 
             // Do sort the new iterator.
             $iterator->uasort( function ($a, $b) {
-                                    return ($b->getDate() <=> $a->getDate() );
+                                    $order = ( $b->getDate() <=> $a->getDate() );
+                                    if ( $order !== 0 )
+                                    {
+                                        return $order;
+                                    }
+                                    return ( $b->getUpdated() <=> $a->getUpdated() );
                                 });
 
             // pass sorted array to ArrayCollection.
@@ -146,7 +155,6 @@ class Positions
                 $stocking->setPosition(null);
             }
         }
-
         return $this;
     }
 

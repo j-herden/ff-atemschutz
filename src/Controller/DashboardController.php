@@ -60,7 +60,7 @@ class DashboardController extends AbstractController
         }
         elseif ($this->isCsrfTokenValid('add-stocking', $submittedToken))
         {
-            $this->addStocking($request, $positionsRepo);
+            $this->addStocking($request, $positionsRepo, $stockingsRepo);
         }
         elseif ($this->isCsrfTokenValid('remove-stocking', $submittedToken))
         {
@@ -127,7 +127,7 @@ class DashboardController extends AbstractController
         $entityManager->flush();
     }
 
-    private function addStocking(Request $request, PositionsRepository $positionsRepo)
+    private function addStocking(Request $request, PositionsRepository $positionsRepo, StockingsRepository $stockingsRepo)
     {
         $deviceId    = $request->request->get('deviceId') ;
         $position_id = intval( $request->request->get('position_id') );
@@ -158,16 +158,27 @@ class DashboardController extends AbstractController
             $this->addFlash('error', __METHOD__ . "Position mit Id $position_id nicht gefunden");
             return;
         }
+        // update or insert record
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $stocking = new Stockings();
-        $stocking->setDate($dateObj);
-        $stocking->setDeviceId($deviceId);
+        $stocking = $stockingsRepo->findOneBy(['date'      => $dateObj,
+                                               'device_id' => $deviceId,
+                                               'position'  => $position,
+                                              ]);
+        if ( ! $stocking )
+        {
+            $stocking = new Stockings();
+            $stocking->setDate($dateObj);
+            $stocking->setDeviceId($deviceId);
+            $position->addStocking($stocking);
+            $entityManager->persist($stocking);
+        }
+        else {
+            $position->setStockingsRemoved();
+        }
+        $stocking->setRemoved( false );
         $stocking->setUser( $this->getUser() );
 
-        $position->addStocking($stocking);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($stocking);
         $entityManager->flush();
     }
 }

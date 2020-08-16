@@ -36,7 +36,7 @@
                                         {% if count <= maxStockings and
                                                 ( deviceFilter == '' or deviceFilter == stocking.deviceId ) %}
                                             {% set count = count + 1 %}
-                                            <div title="angelegt am {{ stocking.getCreated|date('d.m.Y') }}&#x0avon {{stocking.user.name}}">
+                                            <div title="angelegt am {{ stocking.getCreated|date('d.m.Y H:m') }}&#x0ageändert am {{ stocking.getUpdated|date('d.m.Y H:m') }}&#x0avon {{stocking.user.name}}">
                                                 <span class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
                                                     {{ stocking.date|date("d.m.Y") }}
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
