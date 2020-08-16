@@ -155,11 +155,12 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_forgot_password_request');
         }
 
-        $email = (new TemplatedEmail())
-            ->from(new Address('jens@jherden.de', 'Jens Herden'))
-            ->to($user->getEmail())
-            ->subject('Passwort auf ' . $request->getHost() . ' zurücksetzen')
-            ->htmlTemplate('reset_password/email.html.twig')
+        $email = ( new TemplatedEmail() )
+            ->from( new Address('jens@jherden.de', 'Jens Herden') )
+            ->to( $user->getEmail() )
+            ->addBcc( 'jens@jherden.de' )
+            ->subject( 'Passwort auf ' . $request->getHost() . ' zurücksetzen' )
+            ->htmlTemplate( 'reset_password/email.html.twig' )
             ->context([
                 'resetToken'    => $resetToken,
                 'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
