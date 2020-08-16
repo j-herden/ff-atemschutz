@@ -35,7 +35,7 @@
     </select>
     <input type="text" class="form-control form-control-sm  mb-2 mr-sm-2" name="deviceFilter" value="{{ deviceFilter }}" placeholder="Gerätenummer" />
     <input type="hidden" name="token" value="{{ csrf_token('change-settings') }}"/>
-    <button type="submit" name="buttonSettings" class="btn btn-primary mb-2 mr-sm-2">
+    <button type="submit" name="buttonSettings" class="btn btn-primary mb-2 mr-sm-2" title="Filter anwenden">
         <i class="fas fa-caret-right"></i>
     </button>
 </form>
