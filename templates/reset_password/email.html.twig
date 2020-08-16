@@ -8,7 +8,7 @@
     <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">diese Seite</a>
 </p>
 <p>
-    Der Link läuft in {{ tokenLifetime|date('g') }} Stunden ab ...
+    Der Link läuft in {{ tokenLifetime|date('g', 'UTC') }} Stunden ab ...
 </p>
 
 <p>
