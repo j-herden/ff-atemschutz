@@ -60,7 +60,7 @@
             </div>
             <div class="col-sm">
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('easyadmin') }}">Admin</a>
+                <a href="{{ path('app_admin_dashboard_index') }}">Admin</a>
             {% endif %}
             </div>
         </div>
