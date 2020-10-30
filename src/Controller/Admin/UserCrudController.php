@@ -21,7 +21,9 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('User')
             ->setEntityLabelInPlural('User')
-            ->setSearchFields(['id', 'email', 'roles', 'name']);
+            ->setSearchFields(['id', 'email', 'roles', 'name'])
+            ->setDateFormat('yyyy-MM-dd')
+            ->setDateTimeFormat('yyyy-MM-dd HH:mm');
     }
 
     public function configureFields(string $pageName): iterable

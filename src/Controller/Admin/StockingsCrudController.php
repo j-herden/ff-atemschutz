@@ -7,9 +7,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -26,7 +26,9 @@ class StockingsCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Stockings')
             ->setEntityLabelInPlural('Stockings')
-            ->setSearchFields(['id', 'device_id']);
+            ->setSearchFields(['id', 'device_id'])
+            ->setDateFormat('yyyy-MM-dd')
+            ->setDateTimeFormat('yyyy-MM-dd HH:mm');
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -40,7 +42,7 @@ class StockingsCrudController extends AbstractCrudController
     {
         $date = DateField::new('date');
         $deviceId = TextField::new('device_id');
-        $removed = Field::new('removed');
+        $removed = BooleanField::new('removed');
         $position = AssociationField::new('position');
         $user = AssociationField::new('user');
         $id = IntegerField::new('id', 'ID');

@@ -23,7 +23,9 @@ class LocationCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Location')
             ->setEntityLabelInPlural('Location')
-            ->setSearchFields(['id', 'Name']);
+            ->setSearchFields(['id', 'Name'])
+            ->setDateFormat('yyyy-MM-dd')
+            ->setDateTimeFormat('yyyy-MM-dd HH:mm');
     }
 
     public function configureFilters(Filters $filters): Filters

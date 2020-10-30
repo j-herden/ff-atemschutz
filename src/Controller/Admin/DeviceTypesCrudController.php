@@ -21,7 +21,9 @@ class DeviceTypesCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('DeviceTypes')
             ->setEntityLabelInPlural('DeviceTypes')
-            ->setSearchFields(['id', 'Name', 'color']);
+            ->setSearchFields(['id', 'Name', 'color'])
+            ->setDateFormat('yyyy-MM-dd')
+            ->setDateTimeFormat('yyyy-MM-dd HH:mm');
     }
 
     public function configureFields(string $pageName): iterable

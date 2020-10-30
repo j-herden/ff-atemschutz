@@ -22,7 +22,9 @@ class ResetPasswordRequestCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('ResetPasswordRequest')
             ->setEntityLabelInPlural('ResetPasswordRequest')
-            ->setSearchFields(['id', 'selector', 'hashedToken']);
+            ->setSearchFields(['id', 'selector', 'hashedToken'])
+            ->setDateFormat('yyyy-MM-dd')
+            ->setDateTimeFormat('yyyy-MM-dd HH:mm');
     }
 
     public function configureFields(string $pageName): iterable
