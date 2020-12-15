@@ -20,7 +20,7 @@
                     {% set lastDeviceType = 0 %}
 
                     {% for position in location.positions %}
-                        {% if position.CountStockings(deviceFilter) > 0 %}
+                        {% if deviceFilter == '' or position.CountStockings(deviceFilter) > 0 %}
                             {% if deviceTypeId == 0 or deviceTypeId == position.deviceType.id %}
                                 <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
                                      style="border-color: {{ position.deviceType.color }}">
