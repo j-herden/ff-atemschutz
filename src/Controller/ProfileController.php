@@ -7,15 +7,15 @@ use App\Form\UserChangePassword;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $authLogger)
+    public function index(Request $request, UserPasswordHasherInterface $passwordEncoder, LoggerInterface $authLogger)
     {
         // 1) build the form
         $user = new User();
@@ -31,7 +31,7 @@ class ProfileController extends AbstractController
             if($checkPass === true)
             {
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $password = $passwordEncoder->encodePassword($this->getUser(), $user->getPlainPassword());
+                $password = $passwordEncoder->hashPassword($this->getUser(), $user->getPlainPassword());
                 $this->getUser()->setPassword($password);
 
                 // 4) save the User!

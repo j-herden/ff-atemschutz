@@ -1,4 +1,7 @@
 security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+
     encoders:
         App\Entity\User:
             algorithm: auto
@@ -15,7 +18,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
             lazy: true
             provider: app_user_provider
             remember_me:
@@ -39,11 +41,11 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         # - { path: ^/info$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         # - { path: ^/impressum$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         # - { path: ^/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: PUBLIC_ACCESS }
+         # - { path: ^/info$, roles: PUBLIC_ACCESS }
+         # - { path: ^/impressum$, roles: PUBLIC_ACCESS }
+         # - { path: ^/login$, roles: PUBLIC_ACCESS }
+         # - { path: ^/reset-password, roles: PUBLIC_ACCESS }
          - { path: ^/dashboard, roles: ROLE_USER }
          - { path: ^/lists, roles: ROLE_USER }
 
