@@ -15,7 +15,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function index(Request $request, UserPasswordHasherInterface $passwordEncoder, LoggerInterface $authLogger)
+    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, LoggerInterface $authLogger)
     {
         // 1) build the form
         $user = new User();
@@ -27,11 +27,11 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-            $checkPass = $passwordEncoder->isPasswordValid($this->getUser(), $user->getOldPlainPassword() );
+            $checkPass = $passwordHasher->isPasswordValid($this->getUser(), $user->getOldPlainPassword() );
             if($checkPass === true)
             {
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $password = $passwordEncoder->hashPassword($this->getUser(), $user->getPlainPassword());
+                $password = $passwordHasher->hashPassword($this->getUser(), $user->getPlainPassword());
                 $this->getUser()->setPassword($password);
 
                 // 4) save the User!
@@ -40,7 +40,7 @@ class ProfileController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', "Das Passwort wurde geändert");
-                $authLogger->info( 'Password changed ' . $this->getUser()->getUsername() );
+                $authLogger->info( 'Password changed ' . $this->getUser()->getUserIdentifier() );
 
                 return $this->redirect($request->getUri());
             }

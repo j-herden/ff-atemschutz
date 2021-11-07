@@ -2,9 +2,10 @@ security:
     # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
 
-    encoders:
-        App\Entity\User:
-            algorithm: auto
+    password_hashers:
+        # Use native password hasher, which auto-selects and migrates the best
+        # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -22,10 +23,12 @@ security:
             provider: app_user_provider
             remember_me:
                 secret:   '%kernel.secret%'
-#                lifetime: 604800 # 1 week in seconds
-            guard:
-                authenticators:
-                    - App\Security\AppAuthenticator
+                lifetime: 604800 # 1 week in seconds
+            form_login:
+                # "login" is the name of the route
+                login_path: login
+                check_path: login
+                enable_csrf: true
             logout:
                 path: app_logout
                 # where to redirect after logout

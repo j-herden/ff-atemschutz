@@ -21,12 +21,12 @@ class AuthListener
 
     public function onLogout( LogoutEvent $event )
     {
-        $this->logger->info( 'Logout ' . $event->getToken()->getUsername() );
+        $this->logger->info( 'Logout ' . $event->getToken()->getUserIdentifier() );
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        $this->logger->info( 'Login ' . $event->getAuthenticationToken()->getUsername() );
+        $this->logger->info( 'Login ' . $event->getAuthenticationToken()->getUserIdentifier() );
     }
 
 }

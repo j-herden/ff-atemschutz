@@ -13,7 +13,7 @@ class ListsController extends AbstractController
     /**
      * @Route("/lists{type}", name="lists")
      */
-    public function index(string $type = '', StockingsRepository $stockingsRepo, Pdf $snappy)
+    public function index(StockingsRepository $stockingsRepo, Pdf $snappy, string $type = '')
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
