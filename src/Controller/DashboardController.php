@@ -22,10 +22,10 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard{type}", name="dashboard")
      */
-    public function index(string $type = '', Request $request, OrganisationRepository $organisationRepo
+    public function index(Request $request, OrganisationRepository $organisationRepo
                         , PositionsRepository $positionsRepo, DeviceTypesRepository $deviceTypesRepo
                         , SessionInterface $session, StockingsRepository $stockingsRepo
-                        , Pdf $snappy)
+                        , Pdf $snappy, string $type = '')
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
