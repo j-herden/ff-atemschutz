@@ -10,6 +10,7 @@ use App\Repository\DeviceTypesRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\PositionsRepository;
 use App\Repository\StockingsRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use \Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -19,6 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
+    private $managerRegistry;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->managerRegistry = $doctrine;
+    }
+
     /**
      * @Route("/dashboard{type}", name="dashboard")
      */
@@ -122,7 +130,7 @@ class DashboardController extends AbstractController
         }
         $stocking->setRemoved( true );
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->managerRegistry->getManager();
         // $entityManager->persist($stocking);
         $entityManager->flush();
     }
@@ -159,7 +167,7 @@ class DashboardController extends AbstractController
             return;
         }
         // update or insert record
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->managerRegistry->getManager();
 
         $stocking = $stockingsRepo->findOneBy(['date'      => $dateObj,
                                                'device_id' => $deviceId,
