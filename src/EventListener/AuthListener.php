@@ -3,10 +3,6 @@
 namespace App\EventListener;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-// use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
-use Symfony\Component\Security\Http\Event\DeauthenticatedEvent;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
@@ -21,7 +17,10 @@ class AuthListener
 
     public function onLogout( LogoutEvent $event )
     {
-        $this->logger->info( 'Logout ' . $event->getToken()->getUserIdentifier() );
+        if ( $event->getToken() ) 
+        {
+            $this->logger->info( 'Logout ' . $event->getToken()->getUserIdentifier() );
+        }
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)

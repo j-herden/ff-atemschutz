@@ -22,3 +22,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventListener\AuthListener:
+        tags:
+            - { name: kernel.event_listener, event: 'Symfony\Component\Security\Http\Event\LogoutEvent', method: onLogout }
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }

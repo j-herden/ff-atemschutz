@@ -6,6 +6,11 @@ monolog:
 when@dev:
     monolog:
         handlers:
+            auth:
+                type: stream
+                path: "%kernel.logs_dir%/auth.log"
+                level: debug
+                channels: ["auth"]
             main:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
@@ -41,6 +46,11 @@ when@test:
 when@prod:
     monolog:
         handlers:
+            auth:
+                type: stream
+                path: "%kernel.logs_dir%/auth.log"
+                level: debug
+                channels: ["auth"]
             main:
                 type: fingers_crossed
                 action_level: error
