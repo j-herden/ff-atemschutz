@@ -29,7 +29,7 @@ class ListsController extends AbstractController
             return new Response(
                 $pdf, 200, [
                     'Content-Type'          => 'application/pdf',
-                    'Content-Disposition'   => 'attachment; filename="Atemschutz-Dashboard.pdf"'
+                    'Content-Disposition'   => 'attachment; filename="Atemschutz-Liste.pdf"'
             ]);
         }
 
