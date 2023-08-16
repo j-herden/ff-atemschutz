@@ -3,5 +3,7 @@ index:
     controller: App\Controller\AboutPageController::index
 
 controllers:
-    resource: ../src/Controller/
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
     type: attribute
