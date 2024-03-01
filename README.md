@@ -1,4 +1,4 @@
-![psalm workflow](https://github.com/j-herden/ff-atemschutz/actions/workflows/psalm.yml/badge.svg)
+![psalm workflow](https://github.com/j-herden/ff-atemschutz/actions/workflows/psalm.yml/badge.svg) ![symfony workflow](https://github.com/j-herden/ff-atemschutz/actions/workflows/symfony.yml/badge.svg)
 # ff-agt
 Standortübersicht für Geräte der Feuerwehr
 
