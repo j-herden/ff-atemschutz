@@ -10,9 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ListsController extends AbstractController
 {
-    /**
-     * @Route("/lists{type}", name="lists")
-     */
+    #[Route(path: '/lists{type}', name: 'lists')]
+
     public function index(StockingsRepository $stockingsRepo, Pdf $snappy, string $type = '')
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

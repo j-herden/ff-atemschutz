@@ -7,9 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ImpressumController extends AbstractController
 {
-    /**
-     * @Route("/impressum", name="impressum")
-     */
+    #[Route(path: '/impressum', name: 'impressum')]
+
     public function index()
     {
         return $this->render('impressum/index.html.twig', [

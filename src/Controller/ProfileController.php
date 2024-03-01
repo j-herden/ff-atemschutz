@@ -14,9 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
-    /**
-     * @Route("/profile", name="profile")
-     */
+    #[Route(path: '/profile', name: 'profile')]
+
     public function index(Request $request, UserPasswordHasherInterface $passwordHasher, LoggerInterface $authLogger
                           , ManagerRegistry $doctrine, UserRepository $userRepository)
     {

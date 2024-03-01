@@ -27,9 +27,8 @@ class DashboardController extends AbstractController
         $this->managerRegistry = $doctrine;
     }
 
-    /**
-     * @Route("/dashboard{type}", name="dashboard")
-     */
+    #[Route(path: '/dashboard{type}', name: 'dashboard')]
+
     public function index(Request $request, OrganisationRepository $organisationRepo
                         , PositionsRepository $positionsRepo, DeviceTypesRepository $deviceTypesRepo
                         , SessionInterface $session, StockingsRepository $stockingsRepo
