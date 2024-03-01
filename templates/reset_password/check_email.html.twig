@@ -8,6 +8,6 @@
         Wenn die E-Mailadresse bekannt ist, dann wurde eine E-Mail mit einem Link gesendet, den du anklicken kannst, um dein Passwort zurück zu setzen. Dieser Link läuft in {{ tokenLifetime|date('g', 'UTC') }} Stunden ab.
     </p>
     <p>
-        Wenn du die E-Mail nicht bekommen hast, dann prüfe deinen SPAM-Ordner oder <a href="{{ path('app_forgot_password_request') }}">versuche es erneut</a>.
+        Wenn du die E-Mail nicht bekommen hast, dann prüfe deinen SPAM-Ordner oder <a href="{{ path('reset-passwordapp_forgot_password_request') }}">versuche es erneut</a>.
     </p>
 {% endblock %}

@@ -90,7 +90,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
 
-            return $this->redirectToRoute('app_reset_password');
+            return $this->redirectToRoute('reset-passwordapp_reset_password');
         }
 
         $token = $this->getTokenFromSession();
@@ -106,7 +106,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
                 $e->getReason()
             ));
 
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->redirectToRoute('reset-passwordapp_forgot_password_request');
         }
 
         // The token is valid; allow the user to change their password.
@@ -145,7 +145,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
         // Do not reveal whether a user account was found or not.
         if (! $user) {
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('reset-passwordapp_check_email');
         }
 
         try {
@@ -153,16 +153,16 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
         } 
         catch (ResetPasswordExceptionInterface $e) {
             // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
+            // the lines below and change the redirect to 'reset-passwordapp_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
             $this->addFlash('reset_password_error', sprintf(
                 'There was a problem handling your password reset request - %s',
                 $e->getReason()
             ));
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->redirectToRoute('reset-passwordapp_forgot_password_request');
 
-            // return $this->redirectToRoute('app_check_email');
+            // return $this->redirectToRoute('reset-passwordapp_check_email');
         }
 
         $email = ( new TemplatedEmail() )
@@ -184,6 +184,6 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
-        return $this->redirectToRoute('app_check_email');
+        return $this->redirectToRoute('reset-passwordapp_check_email');
     }
 }

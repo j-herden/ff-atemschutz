@@ -7,33 +7,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LocationRepository::class)
- */
+#[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $Name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Organisation::class, inversedBy="locations")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'locations')]
     private $organisation;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Positions::class, mappedBy="Location", fetch="EAGER")
-     * @ORM\OrderBy({"Name" = "ASC"})
-     */
+    #[ORM\OneToMany(targetEntity: Positions::class, mappedBy: 'Location', fetch: 'EAGER')]
+    #[ORM\OrderBy(['Name' => 'ASC'])]
     private $positions;
 
     public function __construct()

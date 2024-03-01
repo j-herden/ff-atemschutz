@@ -5,7 +5,7 @@
     Dein E-Mailadresse für das Login lautet: {{ loginemail|e }}
 <p>
     Um dein Passwort zurückzusetzen, besuche bitte
-    <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">diese Seite</a>
+    <a href="{{ url('reset-passwordapp_reset_password', {token: resetToken.token}) }}">diese Seite</a>
 </p>
 <p>
     Der Link läuft in {{ tokenLifetime|date('g', 'UTC') }} Stunden ab ...

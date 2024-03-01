@@ -8,39 +8,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=PositionsRepository::class)
- */
+#[ORM\Entity(repositoryClass: PositionsRepository::class)]
 class Positions
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
+    #[ORM\Column(type: 'string', length: 20)]
     private $Name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="positions")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'positions')]
     private $Location;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=DeviceTypes::class, inversedBy="positions")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: DeviceTypes::class, inversedBy: 'positions')]
     private $deviceType;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Stockings::class, mappedBy="position")
-     * @ORM\OrderBy({"date" = "DESC", "updated" = "DESC"})
-     */
+    #[ORM\OneToMany(targetEntity: Stockings::class, mappedBy: 'position')]
+    #[ORM\OrderBy(['date' => 'DESC', 'updated' => 'DESC'])]
     private $Stockings;
 
     public function __construct()
