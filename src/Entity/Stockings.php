@@ -32,18 +32,16 @@ class Stockings
     private $user;
 
     /**
-     * @var \DateTime $created
-     *
-     * @Gedmo\Timestampable(on="create")
+     * @var \DateTime
      */
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $created;
 
     /**
-     * @var \DateTime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
+    #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(type: 'datetime')]
     private $updated;
 
