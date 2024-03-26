@@ -37,16 +37,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 30)]
     private $name = '';
 
-    /**
-     * @Assert\Length(max=4096)
-     * @Assert\Length(min=6)
-     */
+    #[Assert\Length(
+        min: 6,
+        max: 4096,
+    )]
     private $plainPassword = 'xxxxxx';
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
-     */
+    #[Assert\Length(
+        max: 4096,
+    )]
+    #[Assert\NotBlank]
     private $oldPlainPassword = 'x';
 
 
@@ -138,7 +138,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
