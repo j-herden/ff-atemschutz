@@ -22,7 +22,7 @@ class Location
     #[ORM\ManyToOne(targetEntity: Organisation::class, inversedBy: 'locations')]
     private $organisation;
 
-    #[ORM\OneToMany(targetEntity: Positions::class, mappedBy: 'Location', fetch: 'EAGER')]
+    #[ORM\OneToMany(targetEntity: Positions::class, mappedBy: 'Location')]
     #[ORM\OrderBy(['Name' => 'ASC'])]
     private $positions;
 
