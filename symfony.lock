@@ -98,9 +98,6 @@
             "config/packages/knp_snappy.yaml"
         ]
     },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
-    },
     "laminas/laminas-eventmanager": {
         "version": "3.2.1"
     },
@@ -496,9 +493,6 @@
     },
     "symfony/property-info": {
         "version": "v5.1.1"
-    },
-    "symfony/proxy-manager-bridge": {
-        "version": "v5.1.11"
     },
     "symfony/routing": {
         "version": "6.2",
