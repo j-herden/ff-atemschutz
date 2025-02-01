@@ -4333,10 +4333,12 @@
             "conflict": {
                 "doctrine/dbal": "<3.6",
                 "symfony/cache": "<6.4.12|>=7.0,<7.1.5"
+                "symfony/cache": "<6.4.12|>=7.0,<7.1.5"
             },
             "require-dev": {
                 "doctrine/dbal": "^3.6|^4",
                 "predis/predis": "^1.1|^2.0",
+                "symfony/cache": "^6.4.12|^7.1.5",
                 "symfony/cache": "^6.4.12|^7.1.5",
                 "symfony/dependency-injection": "^6.4|^7.0",
                 "symfony/expression-language": "^6.4|^7.0",
@@ -6011,6 +6013,7 @@
             "require-dev": {
                 "phpdocumentor/reflection-docblock": "^5.2",
                 "phpstan/phpdoc-parser": "^1.0|^2.0",
+                "phpstan/phpdoc-parser": "^1.0|^2.0",
                 "symfony/cache": "^6.4|^7.0",
                 "symfony/dependency-injection": "^6.4|^7.0",
                 "symfony/serializer": "^6.4|^7.0"
@@ -6822,13 +6825,17 @@
         {
             "name": "symfony/string",
             "version": "v7.1.8",
+            "version": "v7.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
                 "reference": "591ebd41565f356fcd8b090fe64dbb5878f50281"
+                "reference": "591ebd41565f356fcd8b090fe64dbb5878f50281"
             },
             "dist": {
                 "type": "zip",
+                "url": "https://api.github.com/repos/symfony/string/zipball/591ebd41565f356fcd8b090fe64dbb5878f50281",
+                "reference": "591ebd41565f356fcd8b090fe64dbb5878f50281",
                 "url": "https://api.github.com/repos/symfony/string/zipball/591ebd41565f356fcd8b090fe64dbb5878f50281",
                 "reference": "591ebd41565f356fcd8b090fe64dbb5878f50281",
                 "shasum": ""
@@ -6889,6 +6896,7 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/string/tree/v7.1.8"
+                "source": "https://github.com/symfony/string/tree/v7.1.8"
             },
             "funding": [
                 {
@@ -6904,6 +6912,7 @@
                     "type": "tidelift"
                 }
             ],
+            "time": "2024-11-13T13:31:21+00:00"
             "time": "2024-11-13T13:31:21+00:00"
         },
         {
@@ -7295,6 +7304,7 @@
                 "symfony/property-info": "<6.4"
             },
             "require-dev": {
+                "phpstan/phpdoc-parser": "^1.0|^2.0",
                 "phpstan/phpdoc-parser": "^1.0|^2.0",
                 "symfony/dependency-injection": "^6.4|^7.0",
                 "symfony/property-info": "^6.4|^7.0"
@@ -11476,5 +11486,6 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
+    "plugin-api-version": "2.6.0"
     "plugin-api-version": "2.6.0"
 }
