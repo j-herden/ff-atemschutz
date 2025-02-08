@@ -40,7 +40,7 @@ class DashboardController extends AbstractController
 
         // settings
         $showForms    = $session->get('dashboard.showForms', true);
-        $maxStockings = $session->get('dashboard.maxStockings', 3);
+        $maxStockings = $session->get('dashboard.maxStockings', 1);
         $deviceTypeId = $session->get('dashboard.deviceTypeId', 0);
         $deviceFilter = $session->get('dashboard.deviceFilter', '');
         if ($this->isCsrfTokenValid('change-settings', $submittedToken))
