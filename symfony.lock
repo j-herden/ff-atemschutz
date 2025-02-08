@@ -17,9 +17,6 @@
     "doctrine/collections": {
         "version": "1.6.5"
     },
-    "doctrine/common": {
-        "version": "2.13.3"
-    },
     "doctrine/dbal": {
         "version": "2.10.2"
     },
