@@ -130,6 +130,7 @@ h1 {
 }
 
 div.position form.formAdd {
+    margin-top: 20px;
     margin-bottom: 4px;
     text-align: right;
 }
