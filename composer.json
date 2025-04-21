@@ -41,7 +41,8 @@
         "symfony/web-link": "*",
         "symfony/yaml": "*",
         "symfonycasts/reset-password-bundle": "^1.21",
-        "twig/extra-bundle": "^3.0",
+        "twig/extra-bundle": "^3.20",
+        "twig/intl-extra": "^3.20",
         "twig/twig": "^3.0"
     },
     "require-dev": {

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StockingsRepository;
+use DateTime;
 use Gedmo\Mapping\Annotation as Gedmo; // this will be like an alias for Gedmo extensions annotations
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +20,9 @@ class Stockings
 
     #[ORM\Column(type: 'string', length: 20)]
     private $device_id;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $maintenance;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Positions::class, inversedBy: 'Stockings')]
@@ -80,6 +84,26 @@ class Stockings
     public function setDeviceId(string $device_id): self
     {
         $this->device_id = $device_id;
+
+        return $this;
+    }
+    
+    public function getMaintenance(): ?\DateTimeInterface
+    {
+        return $this->maintenance;
+    }
+
+    public function setMaintenance(\DateTimeInterface $maintenance): self
+    {
+        if ( is_null($maintenance) ) 
+        {
+            $this->maintenance = '';
+        }
+        else {
+            $date = DateTime::createFromInterface( $maintenance );
+            $date->modify('last day of this month');
+            $this->maintenance = $date;
+        }
 
         return $this;
     }

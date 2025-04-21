@@ -41,6 +41,7 @@ class StockingsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $date = DateField::new('date');
+        $maintenance = DateField::new('maintenance');
         $deviceId = TextField::new('device_id');
         $removed = BooleanField::new('removed');
         $position = AssociationField::new('position');
@@ -50,13 +51,13 @@ class StockingsCrudController extends AbstractCrudController
         $updated = DateTimeField::new('updated');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $date, $deviceId, $removed, $position, $user, $updated, $created];
+            return [$id, $date, $deviceId, $maintenance, $removed, $position, $user, $updated, $created];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $date, $deviceId, $removed, $created, $updated, $position, $user];
+            return [$id, $date, $deviceId, $maintenance, $removed, $created, $updated, $position, $user];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$date, $deviceId, $removed, $position, $user];
+            return [$date, $deviceId, $maintenance, $removed, $position, $user];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$date, $deviceId, $removed, $position, $user];
+            return [$date, $deviceId, $maintenance, $removed, $position, $user];
         }
     }
 }

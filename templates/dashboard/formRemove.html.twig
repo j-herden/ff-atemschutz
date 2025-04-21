@@ -4,6 +4,6 @@
         <input name="stockingId" value="{{ stocking.id }}" type="hidden" />
         <input type="hidden" name="token" value="{{ csrf_token('remove-stocking') }}"/>
         <button class="btn btn-sm btn-outline-danger rounded-circle" type="submit" name="removeStocking" title="Gerät entnehmen" style="line-height: 50%; border: none;">
-            <i class="fas fa-ban"></i>
+            <i class="fas fa-minus"></i>
         </button>
 </form>

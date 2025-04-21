@@ -5,13 +5,13 @@
     {% for orga in organisations %}
         <div class="organisation" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
 
-    {%set isCollapsed = app.request.cookies.get( "collapse#{orga.id}" ) == 'collapsed' %}
+        {%set isCollapsed = app.request.cookies.get( "collapse#{orga.id}" ) == 'collapsed' %}
 
-    <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if isCollapsed %}collapsed{% endif %}">
-                <h3 style="background-color: {{ orga.color }}">
-                    {{ orga.name|e }} <i class="fa"></i>
-                </h3>
-            </a>
+        <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if isCollapsed %}collapsed{% endif %}">
+            <h3 style="background-color: {{ orga.color }}">
+                {{ orga.name|e }} <i class="fa"></i>
+            </h3>
+        </a>
         <div id="collapse{{ orga.id }}" class="collapse {% if not isCollapsed %}show{% endif %} ">
 
             {% for location in orga.locations %}
@@ -24,23 +24,38 @@
                             {% if deviceTypeId == 0 or deviceTypeId == position.deviceType.id %}
                                 <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
                                      style="border-color: {{ position.deviceType.color }}">
-                                    <div class="positionName" style="color: {{ position.deviceType.color }}">
+                                    <div data-toggle="collapse" href="#formcollapse{{ position.id }}" title="umschalten" class="positionName collapsed" style="color: {{ position.deviceType.color }}">
                                         {{ position.name|e }}
+                                        <i class="fa-solid fa-repeat"></i>
                                     </div>
-                                    {% if showForms %}
+                                    <div id="formcollapse{{ position.id }}" class="collapse">
                                         {{ include('dashboard/formAdd.html.twig') }}
-                                    {% endif %}
-                                    <div class="stockings" >
+                                    </div>
+                                    <div id="formcollapse{{ position.id }}" class="stockings collapse show" >
                                     {% set count = 1 %}
                                     {% for stocking in position.stockings %}
-                                        {% if count <= maxStockings and
+                                        {% if count <= maxStockings and 
                                                 ( deviceFilter == '' or deviceFilter == stocking.deviceId ) %}
                                             {% set count = count + 1 %}
                                             <div title="angelegt am {{ stocking.getCreated|date('d.m.Y H:m') }}&#x0ageändert am {{ stocking.getUpdated|date('d.m.Y H:m') }}&#x0avon {{stocking.user.name}}">
-                                                <span class="stocking {{ stocking.removed ? 'isRemoved' : '' }} ">
+                                                {% set hasMaintanance = (stocking.maintenance|date("y") != "-1") %}
+                                                {% set classname = '' %}
+                                                {% if not stocking.removed and stocking.maintenance|date("y-m-d") != "0000-00-00" %}
+                                                    {% if stocking.maintenance|date("y-m") == "now"|date("y-m") %}
+                                                        {% set classname = 'maintanance_warning' %}
+                                                    {% endif %}
+                                                    {% if hasMaintanance and stocking.maintenance|date("U") < "now"|date("U") %}
+                                                        {% set classname = 'maintanance_error' %}
+                                                    {% endif %}
+                                                {% endif %}
+                                                <span class="stocking {{ stocking.removed ? 'isRemoved' : '' }} {{ classname }}">
                                                     {{ stocking.date|date("d.m.Y") }}
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {{ stocking.deviceId|e }}
+                                                    {% if stocking.maintenance is not empty and hasMaintanance %}
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        {{ stocking.maintenance|format_datetime(pattern: "MMM Y", locale: 'de') }}
+                                                    {% endif %}
                                                 </span>
                                                 {% if not stocking.removed %}
                                                     {{ include('dashboard/formRemove.html.twig') }}

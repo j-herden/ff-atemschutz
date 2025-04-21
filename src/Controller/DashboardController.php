@@ -10,6 +10,7 @@ use App\Repository\DeviceTypesRepository;
 use App\Repository\OrganisationRepository;
 use App\Repository\PositionsRepository;
 use App\Repository\StockingsRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use \Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,14 +40,11 @@ class DashboardController extends AbstractController
         $submittedToken = $request->request->get('token');
 
         // settings
-        $showForms    = $session->get('dashboard.showForms', true);
         $maxStockings = $session->get('dashboard.maxStockings', 1);
         $deviceTypeId = $session->get('dashboard.deviceTypeId', 0);
         $deviceFilter = $session->get('dashboard.deviceFilter', '');
         if ($this->isCsrfTokenValid('change-settings', $submittedToken))
         {
-            $showForms = ( $request->request->get('showForms') === 'on' );
-
             $formMaxStockings = $request->request->get('maxStockings');
             if ( ! is_null( $formMaxStockings ) )
             {
@@ -74,11 +72,19 @@ class DashboardController extends AbstractController
             $this->removeStocking($request, $stockingsRepo);
         }
 
-
+        // generate list of possible maintenance dates
+        $date_start = new DateTime();
+        $date_start->modify("first day of this month");
+        $date_start->modify("+6 month");
+        $maintenance_dates = [];
+        for ($x = 0; $x <= 6; $x++) 
+        {
+            array_push($maintenance_dates, clone $date_start);
+            $date_start->modify("-1 month");
+        }
         $organisations = $organisationRepo->findAll();
         $deviceTypes = $deviceTypesRepo->findAll();
 
-        $session->set('dashboard.showForms',    $showForms);
         $session->set('dashboard.maxStockings', $maxStockings);
         $session->set('dashboard.deviceTypeId', $deviceTypeId);
         $session->set('dashboard.deviceFilter', $deviceFilter);
@@ -88,7 +94,6 @@ class DashboardController extends AbstractController
             $html = $this->renderView('dashboard/index.html.twig', [
                 'organisations' => $organisations,
                 'deviceTypes'   => $deviceTypes,
-                'showForms'     => false,
                 'deviceTypeId'  => $deviceTypeId,
                 'maxStockings'  => $maxStockings,
                 'deviceFilter'  => $deviceFilter,
@@ -103,12 +108,12 @@ class DashboardController extends AbstractController
         }
 
         return $this->render('dashboard/index.html.twig', [
-            'organisations' => $organisations,
-            'deviceTypes'   => $deviceTypes,
-            'showForms'     => $showForms,
-            'deviceTypeId'  => $deviceTypeId,
-            'maxStockings'  => $maxStockings,
-            'deviceFilter'  => $deviceFilter,
+            'organisations'     => $organisations,
+            'deviceTypes'       => $deviceTypes,
+            'deviceTypeId'      => $deviceTypeId,
+            'maxStockings'      => $maxStockings,
+            'deviceFilter'      => $deviceFilter,
+            'maintenance_dates' => $maintenance_dates,
         ]);
     }
 
@@ -139,6 +144,7 @@ class DashboardController extends AbstractController
         $deviceId    = $request->request->get('deviceId') ;
         $position_id = intval( $request->request->get('position_id') );
         $date        = $request->request->get('date');
+        $maintenance = $request->request->get('maintenance');
 
         if ( is_null( $deviceId ) or is_null( $position_id ) or is_null( $date ) )
         {
@@ -150,6 +156,12 @@ class DashboardController extends AbstractController
         if ( $dateObj === false )
         {
             $this->addFlash('error', __METHOD__ . "Datum nicht verstanden");
+            return;
+        }
+
+        $maintenanceObj = date_create_from_format('Y-m-d', $maintenance);
+        if ($maintenanceObj === false) {
+            $this->addFlash('error', __METHOD__ . "Prüftermin nicht verstanden");
             return;
         }
 
@@ -176,6 +188,7 @@ class DashboardController extends AbstractController
         {
             $stocking = new Stockings();
             $stocking->setDate($dateObj);
+            $stocking->setMaintenance($maintenanceObj);
             $stocking->setDeviceId($deviceId);
             $position->addStocking($stocking);
             $entityManager->persist($stocking);

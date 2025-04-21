@@ -18,10 +18,10 @@ easy_admin:
         Stockings:
             class: App\Entity\Stockings
             list:
-                filters: ['position', 'user']
+                filters: ['position', 'user', 'maintenance']
                 fields: ['id', 'date', 'device_id', 'removed', 'position', 'user', 'updated', 'created']
             form:
-                fields: ['date', 'device_id', 'removed', 'position', 'user']
+                fields: ['date', 'device_id', 'maintenance', 'removed', 'position', 'user']
 
         Organisation:
             class: App\Entity\Organisation

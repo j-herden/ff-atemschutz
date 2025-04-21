@@ -1,9 +1,16 @@
 
-
-
 <form class="formAdd" action="#location{{ location.id }}" method="post" >
-        <input name="date" class="dateinput" type="date" value="{{ "now"|date("Y-m-d") }}"  required="required"/>
-        <input name="deviceId" class="deviceId" required="required" title="Neue Gerätenummer eingeben und mit Entertaste bestätigen." />
-        <input name="position_id" value="{{ position.id }}" type="hidden" />
-        <input type="hidden" name="token" value="{{ csrf_token('add-stocking') }}"/>
+  <label for="date">Datum</label> <input id="date" name="date" class="dateinput" type="date" value="{{ "now"|date("Y-m-d") }}" required="required"/> <br/>
+  <label for="deviceId">Nummer</label> <input id="deviceId" name="deviceId" class="deviceId" required="required" title="Neue Gerätenummer eingeben und mit Entertaste bestätigen." /> <br/>
+  <label for="maintenance">Prüf-Termin</label> 
+  <select name="maintenance" class="maintenance" id="maintenance" title="Prüfungstermin">
+    <option value="0000-00-00"></option>
+    {% for maintenance_date in maintenance_dates %}
+    <option value="{{ maintenance_date|date("Y-m-d") }}">{{ maintenance_date|format_datetime(pattern: "MMM Y", locale: 'de') }}</option>
+    {% endfor %}
+  </select> <br/>
+  {# <a data-toggle="collapse" href="#formcollapse{{ position.id }}">Abbrechen</a> #}
+  <button type="submit">Hinzufügen</button>
+  <input name="position_id" value="{{ position.id }}" type="hidden" />
+  <input type="hidden" name="token" value="{{ csrf_token('add-stocking') }}"/>
 </form>
