@@ -41,7 +41,7 @@ class StockingsRepository extends ServiceEntityRepository
     public function findCurrent(): array
     {
         return $this->createQueryBuilder('s')
-            ->select('s.date, s.device_id')
+            ->select('s.date, s.device_id,s.maintenance')
             ->andWhere('s.removed = :removed')
             ->setParameter('removed', false)
             ->leftJoin('s.position', 'pos')
@@ -60,4 +60,26 @@ class StockingsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findMaintenance(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.date, s.device_id, s.maintenance')
+            ->andWhere('s.removed = :removed')
+            ->setParameter('removed', false)
+            ->andWhere('s.maintenance != :maintenance')
+            ->setParameter('maintenance', '0000-00-00')
+            ->leftJoin('s.position', 'pos')
+            ->addSelect('pos.Name as posName')
+            ->leftJoin(DeviceTypes::class, 'dt', Join::WITH, 'dt.id = pos.deviceType')
+            ->addSelect('dt.Name as dtName, dt.color as dtColor')
+            ->leftJoin(Location::class, 'loc', Join::WITH, 'loc.id = pos.Location')
+            ->addSelect('loc.Name as locName')
+            ->leftJoin(Organisation::class, 'org', Join::WITH, 'org.id = loc.organisation')
+            ->addSelect('org.Name as orgName, org.color as orgColor')
+            ->orderBy('s.maintenance', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }    
 }

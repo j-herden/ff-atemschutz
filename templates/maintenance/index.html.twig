@@ -1,38 +1,32 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Atemschutz Listenansicht{% endblock %}
+{% block title %}Prüftermine{% endblock %}
 
 {% block body %}
 
 {{ include('pdfdownload.html.twig') }}
 
-<h2>Atemschutz Listenansicht</h2>
+<h2>Prüftermine</h2>
 
 {# {{ dump(app.request.requesturi) }} #}
 
 <table class="table table-sm table-striped">
     <thead>
         <tr>
+            <th scope="col">Prüftermin</th>
             <th scope="col">Organisation</th>
             <th scope="col">Gerätenr.</th>
-            <th scope="col">Gerätetyp</th>
-            <th scope="col">Datum</th>
             <th scope="col">Standort</th>
             <th scope="col">Lagerplatz</th>
-            <th scope="col">Prüftermin</th>
+            <th scope="col">Gerätetyp</th>
+            <th scope="col">Datum</th>
         </tr>
     </thead>
     <tbody>
         {% for stocking in stockings %}
             <tr>
-                <td style="border-left: 6px solid {{stocking.orgColor}};">{{ stocking.orgName }}</td>
-                <td>{{ stocking.device_id }}</th>
-                <td style="color: {{stocking.dtColor}};">{{ stocking.dtName }}</td>
-                <td>{{ stocking.date|date('d.m.Y') }}</td>
-                <td>{{ stocking.locName }}</td>
-                <td >{{ stocking.posName }}</td>
-                <td style="border-right: 6px solid {{stocking.orgColor}};">
+                <td>
                     {% if stocking.maintenance|date("y") != "-1" %}
                         {% set classname = '' %}
                         {% if stocking.maintenance|date("y-m") == "now"|date("y-m") %}
@@ -46,6 +40,12 @@
                         </span>
                     {% endif %}
                 </td>
+                <td>{{ stocking.orgName }}</td>
+                <td>{{ stocking.device_id }}</th>
+                <td>{{ stocking.locName }}</td>
+                <td >{{ stocking.posName }}</td>
+                <td style="color: {{stocking.dtColor}};">{{ stocking.dtName }}</td>
+                <td>{{ stocking.date|date('d.m.Y') }}</td>
             </tr>
         {% endfor %}
     </tbody>
