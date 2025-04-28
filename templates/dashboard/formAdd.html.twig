@@ -1,7 +1,7 @@
 
 <form class="formAdd" action="#location{{ location.id }}" method="post" >
   <label for="date">Datum</label> <input id="date" name="date" class="dateinput" type="date" value="{{ "now"|date("Y-m-d") }}" required="required"/> <br/>
-  <label for="deviceId">Nummer</label> <input id="deviceId" name="deviceId" class="deviceId" required="required" title="Neue Gerätenummer eingeben und mit Entertaste bestätigen." /> <br/>
+  <label for="deviceId">Nummer</label> <input id="deviceId" name="deviceId" class="deviceId" required="required" title="Neue Gerätenummer eingeben" /> <br/>
   <label for="maintenance">Prüf-Termin</label> 
   <select name="maintenance" class="maintenance" id="maintenance" title="Prüfungstermin">
     <option value="0000-00-00"></option>

@@ -55,27 +55,21 @@ div#page {
 }
 
 div.organisation {
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 2px;
-    margin-top: 8px;
-    height: auto;
-    background-color: white;
+    margin-top: 0.5rem;
 }
 
 div.organisation h3 {
-    padding: 8px;
     margin: 0;
-    font-size: 120%;
-    font-weight: bold;
     /* margin-bottom: 8px; */
 }
 
 div.location {
-    padding-bottom: 0.5rem;
     height: auto;
     overflow: hidden;
     padding-top: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 div.location h4 {
@@ -90,8 +84,9 @@ div.location h4 {
 div.position {
     float: left;
     margin: 4px;
-    border: 2px solid silver;
-    border-radius: 2px;
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-radius: 2px !important;
     padding: 4px;
     background-color: white;
 }
@@ -106,11 +101,6 @@ div.footer {
 div.positionName {
     font-weight: bold;
     text-align: right;
-}
-
-div.positionName svg {
-    color: lightgray;
-    margin-left: 30%;
 }
 
 div.stockings {
@@ -139,17 +129,18 @@ div.position input:focus {
     background-color: yellow;
 }
 
-div.position input.dateinput, div.position input.deviceId {
+div.position input.dateinput, 
+div.position input.deviceId {
     width: 90px;
     height: 24px;
     padding: 2px;
-    font-size: 80%;
     border: 1px dotted silver;
     border-radius: 2px;
+    margin-bottom: 4px !important;
 }
 
 div.position input.dateinput {
-    width: 104px;
+    width: auto;
 }
 
 div.position select.maintenance {
@@ -160,6 +151,7 @@ div.position select.maintenance {
     border-radius: 2px;
     background-color: inherit;
     text-align: right;
+    margin-bottom: 8px;
 }
 
 span.stocking {
@@ -170,15 +162,6 @@ span.stocking {
 
 span.isRemoved {
     color: #666;
-}
-
-/* Icon für collapse */
-/* [data-toggle="collapse"] .fa:before {
-  content: "\f139";
-} */
-
-[data-toggle="collapse"].collapsed  .fa:before {
-  content: "\f13a";
 }
 
 div.createdat {
@@ -202,4 +185,23 @@ a.pdfdownload {
 
 .maintanance_warning {
     background-color: orange;
+}
+
+div.organisation > button.accordion-button {
+    box-shadow: none !important;
+    font-size: 70%;
+    padding: 10px;
+}
+
+div.positionName > button.accordion-button {
+    padding: 2px;
+    background-color: transparent;
+    border: none;
+}
+
+.accordion-flush >.accordion-item {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    border-radius: 2px;
 }

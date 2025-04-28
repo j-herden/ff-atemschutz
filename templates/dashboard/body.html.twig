@@ -1,37 +1,55 @@
 
-<div class="dashboard">
+<div class="dashboard accordion accordion-flush">
 {# {{ dump(organisations) }} #}
 
     {% for orga in organisations %}
-        <div class="organisation" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
+
+    <div class="organisation accordion-item" style="border-color: {{ orga.color }}; background-color: {{ orga.color }}22">
 
         {%set isCollapsed = app.request.cookies.get( "collapse#{orga.id}" ) == 'collapsed' %}
 
-        <a data-toggle="collapse" href="#collapse{{ orga.id }}" title="anzeigen oder verstecken" class="{% if isCollapsed %}collapsed{% endif %}">
-            <h3 style="background-color: {{ orga.color }}">
+        <h3 class="accordion-header" style="background-color: {{ orga.color }}">
+            <button type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ orga.id }}" title="anzeigen oder verstecken" style="background-color: {{ orga.color }}"
+                    class="accordion-button {% if isCollapsed %}collapsed{% endif %}"  aria-expanded="{{ isCollapsed }}" aria-controls="collapse{{ orga.id }}">
                 {{ orga.name|e }} <i class="fa"></i>
-            </h3>
-        </a>
-        <div id="collapse{{ orga.id }}" class="collapse {% if not isCollapsed %}show{% endif %} ">
+            </button>
+        </h3>
+        <div id="collapse{{ orga.id }}" class="accordion-collapse collapse {% if not isCollapsed %}show{% endif %} ">
 
             {% for location in orga.locations %}
-                <div class="location" style="border-bottom: 1px solid {{ orga.color }};" id="location{{ location.id }}">
+                <div class="location accordion-body" style="border-bottom: 1px solid {{ orga.color }};" id="location{{ location.id }}">
                     <h4>{{ location.name|e }}</h4>
                     {% set lastDeviceType = 0 %}
 
                     {% for position in location.positions %}
                         {% if deviceFilter == '' or position.CountStockings(deviceFilter) > 0 %}
                             {% if deviceTypeId == 0 or deviceTypeId == position.deviceType.id %}
-                                <div class="position {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
+
+    
+      {# <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Accordion Item #1
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+    </div>
+  </div> #}
+
+
+                                <div class="position accordion-item {% if lastDeviceType != position.deviceType.id %} firstPosition {% set lastDeviceType = position.deviceType.id %} {% endif %}"
                                      style="border-color: {{ position.deviceType.color }}">
-                                    <div data-toggle="collapse" href="#formcollapse{{ position.id }}" title="umschalten" class="positionName collapsed" style="color: {{ position.deviceType.color }}">
-                                        {{ position.name|e }}
-                                        <i class="fa-solid fa-repeat"></i>
+                                    <div title="umschalten" class="positionName accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#formcollapse{{ position.id }}" 
+                                                style="color: {{ position.deviceType.color }}" aria-expanded="false" aria-controls="formcollapse{{ position.id }}">
+                                            {{ position.name|e }}
+                                        </button>
                                     </div>
-                                    <div id="formcollapse{{ position.id }}" class="collapse">
+                                    <div id="formcollapse{{ position.id }}" class="accordion-collapse collapse">
                                         {{ include('dashboard/formAdd.html.twig') }}
                                     </div>
-                                    <div id="formcollapse{{ position.id }}" class="stockings collapse show" >
+                                    <div id="formcollapse{{ position.id }}" class="stockings accordion-collapse collapse show" >
                                     {% set count = 1 %}
                                     {% for stocking in position.stockings %}
                                         {% if count <= maxStockings and 
