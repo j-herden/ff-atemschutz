@@ -70,6 +70,8 @@ div.location {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     padding-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 div.location h4 {
@@ -78,7 +80,6 @@ div.location h4 {
     padding: 8px;
     font-size: 100%;
     font-weight: bold;
-    /* background-color: silver; */
 }
 
 div.position {
@@ -89,6 +90,7 @@ div.position {
     border-radius: 2px !important;
     padding: 4px;
     background-color: white;
+    height: 100%;
 }
 
 div.footer {
@@ -204,4 +206,11 @@ div.positionName > button.accordion-button {
     border-right: 2px solid;
     border-bottom: 2px solid;
     border-radius: 2px;
+}
+
+/* Inserting this collapsed row between two flex items will make 
+ * the flex item that comes after it break to a new row */
+.flexbreak {
+    flex-basis: 100%;
+    height: 6px;
 }
