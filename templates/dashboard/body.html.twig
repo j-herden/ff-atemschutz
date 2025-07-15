@@ -62,7 +62,7 @@
                                                     {{ stocking.deviceId|e }}
                                                     {% if stocking.maintenance is not empty and hasMaintanance %}
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        {{ stocking.maintenance|format_datetime(pattern: "MMM Y", locale: 'de') }}
+                                                        {{ stocking.maintenance|format_datetime(pattern: "MMM y", locale: 'de') }}
                                                     {% endif %}
                                                 </span>
                                                 {% if not stocking.removed %}
