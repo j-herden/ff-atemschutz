@@ -92,11 +92,12 @@ class DashboardController extends AbstractController
         if ( $type === '.pdf' )
         {
             $html = $this->renderView('dashboard/index.html.twig', [
-                'organisations' => $organisations,
-                'deviceTypes'   => $deviceTypes,
-                'deviceTypeId'  => $deviceTypeId,
-                'maxStockings'  => $maxStockings,
-                'deviceFilter'  => $deviceFilter,
+                'organisations'     => $organisations,
+                'deviceTypes'       => $deviceTypes,
+                'deviceTypeId'      => $deviceTypeId,
+                'maxStockings'      => $maxStockings,
+                'deviceFilter'      => $deviceFilter,
+                'maintenance_dates' => $maintenance_dates,
             ]);
 
             $pdf = $snappy->getOutputFromHtml( $html );
