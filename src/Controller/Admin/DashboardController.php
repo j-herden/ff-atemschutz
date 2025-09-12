@@ -10,6 +10,7 @@ use App\Entity\Positions;
 use App\Entity\ResetPasswordRequest;
 use App\Entity\Stockings;
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     private $adminUrlGenerator;
@@ -28,8 +30,6 @@ class DashboardController extends AbstractDashboardController
     {
         $this->adminUrlGenerator = $adminUrlGenerator;
     }
-
-    #[Route(path: '/admin', name: 'admin')]
 
     public function index(): Response
     {
