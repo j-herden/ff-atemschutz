@@ -6,7 +6,7 @@
   <select name="maintenance" class="maintenance" id="maintenance" title="Prüfungstermin">
     <option value="0000-00-00"></option>
     {% for maintenance_date in maintenance_dates %}
-    <option value="{{ maintenance_date|date("Y-m-d") }}">{{ maintenance_date|format_datetime(pattern: "MMM Y", locale: 'de') }}</option>
+    <option value="{{ maintenance_date|date("Y-m-d") }}">{{ maintenance_date|format_datetime(pattern: "MMM yyyy", locale: 'de') }}</option>
     {% endfor %}
   </select> <br/>
   {# <a data-toggle="collapse" href="#formcollapse{{ position.id }}">Abbrechen</a> #}
