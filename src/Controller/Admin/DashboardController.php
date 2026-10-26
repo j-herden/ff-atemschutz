@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
-    private $adminUrlGenerator;
+    private AdminUrlGenerator $adminUrlGenerator;
 
     public function __construct(AdminUrlGenerator $adminUrlGenerator)
     {
