@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Organisation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 /**
  * @method Organisation|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,7 +29,7 @@ class OrganisationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->andWhere('o.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
+            ->orderBy('o.id', SortDirection::Ascending)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

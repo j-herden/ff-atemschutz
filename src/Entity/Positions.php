@@ -7,6 +7,7 @@ use App\Repository\PositionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 #[ORM\Entity(repositoryClass: PositionsRepository::class)]
 class Positions
@@ -28,7 +29,7 @@ class Positions
     private $deviceType;
 
     #[ORM\OneToMany(targetEntity: Stockings::class, mappedBy: 'position')]
-    #[ORM\OrderBy(['date' => 'DESC', 'updated' => 'DESC'])]
+    #[ORM\OrderBy(['date' => SortDirection::Descending, 'updated' => SortDirection::Descending])]
     private $Stockings;
 
     public function __construct()

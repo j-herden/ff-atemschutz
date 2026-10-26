@@ -9,6 +9,7 @@ use App\Entity\Stockings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 /**
  * @method Stockings|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,8 +32,8 @@ class StockingsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.removed = :removed')
             ->setParameter('removed', false)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
+            //            ->orderBy('s.id', SortDirection::Ascending)
+            //            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
@@ -52,10 +53,10 @@ class StockingsRepository extends ServiceEntityRepository
             ->addSelect('loc.Name as locName')
             ->leftJoin(Organisation::class, 'org', Join::WITH, 'org.id = loc.organisation')
             ->addSelect('org.Name as orgName, org.color as orgColor')
-            ->orderBy('org.Name', 'ASC')
-            ->addOrderBy('dt.Name', 'ASC')
-            ->addOrderBy('loc.Name', 'ASC')
-            ->addOrderBy('pos.Name', 'ASC')
+            ->orderBy('org.Name', SortDirection::Ascending)
+            ->addOrderBy('dt.Name', SortDirection::Ascending)
+            ->addOrderBy('loc.Name', SortDirection::Ascending)
+            ->addOrderBy('pos.Name', SortDirection::Ascending)
             ->getQuery()
             ->getResult()
         ;
@@ -77,7 +78,7 @@ class StockingsRepository extends ServiceEntityRepository
             ->addSelect('loc.Name as locName')
             ->leftJoin(Organisation::class, 'org', Join::WITH, 'org.id = loc.organisation')
             ->addSelect('org.Name as orgName, org.color as orgColor')
-            ->orderBy('s.maintenance', 'ASC')
+            ->orderBy('s.maintenance', SortDirection::Ascending)
             ->getQuery()
             ->getResult()
         ;

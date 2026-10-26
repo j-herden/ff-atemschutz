@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Location;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 /**
  * @method Location|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,7 +29,7 @@ class LocationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('l')
             ->andWhere('l.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
+            ->orderBy('l.id', SortDirection::Ascending)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

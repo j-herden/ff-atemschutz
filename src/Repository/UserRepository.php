@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -45,7 +46,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
+            ->orderBy('u.id', SortDirection::Ascending)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

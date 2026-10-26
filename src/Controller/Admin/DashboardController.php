@@ -67,13 +67,13 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Stockings', 'fas fa-location-arrow', Stockings::class);
-        yield MenuItem::linkToCrud('Positions', 'fas fa-box', Positions::class);
-        yield MenuItem::linkToCrud('Location', 'fas fa-map-marker-alt', Location::class);
-        yield MenuItem::linkToCrud('Organisation', 'fas fa-sitemap', Organisation::class);
-        yield MenuItem::linkToCrud('DeviceTypes', 'fas fa-tools', DeviceTypes::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('ResetPasswordRequest', 'fas fa-unlock', ResetPasswordRequest::class);
+        yield MenuItem::linkTo(StockingsCrudController::class, 'Stockings', 'fas fa-location-arrow');
+        yield MenuItem::linkTo(PositionsCrudController::class, 'Positions', 'fas fa-box');
+        yield MenuItem::linkTo(LocationCrudController::class, 'Location', 'fas fa-map-marker-alt');
+        yield MenuItem::linkTo(OrganisationCrudController::class, 'Organisation', 'fas fa-sitemap');
+        yield MenuItem::linkTo(DeviceTypesCrudController::class, 'DeviceTypes', 'fas fa-tools');
+        yield MenuItem::linkTo(UserCrudController::class, 'User', 'fas fa-user');
+        yield MenuItem::linkTo(ResetPasswordRequestCrudController::class, 'ResetPasswordRequest', 'fas fa-unlock');
         yield MenuItem::linktoRoute('Dashboard', 'fas fa-tachometer-alt', 'dashboard');
     }
 }

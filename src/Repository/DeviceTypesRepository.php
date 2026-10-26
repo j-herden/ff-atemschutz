@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\DeviceTypes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 /**
  * @method DeviceTypes|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,7 +29,7 @@ class DeviceTypesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
+            ->orderBy('d.id', SortDirection::Ascending)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

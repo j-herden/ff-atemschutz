@@ -6,6 +6,7 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use SortDirection; // Import the native PHP 8.6 enum polyfilled by Symfony
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
@@ -23,7 +24,7 @@ class Location
     private $organisation;
 
     #[ORM\OneToMany(targetEntity: Positions::class, mappedBy: 'Location')]
-    #[ORM\OrderBy(['Name' => 'ASC'])]
+    #[ORM\OrderBy(['Name' => SortDirection::Ascending])]
     private $positions;
 
     public function __construct()
